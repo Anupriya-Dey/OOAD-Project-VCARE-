@@ -8,13 +8,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'medical%20history/patient_history.dart';
 import 'patient_profile.dart';
 
-// class Mypatients {
-//   String name;
-//   String phno;
-//   Image prfl = Image.asset("assets/images/imgdefault.png");
-//   Mypatients.constructor1(this.name, this.phno, this.prfl);
-//   Mypatients.constructor2(this.name, this.phno);
-// }
+
 
 class Patients extends StatefulWidget {
   const Patients({super.key});

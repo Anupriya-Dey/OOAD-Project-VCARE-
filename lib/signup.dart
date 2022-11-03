@@ -1,68 +1,23 @@
-import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 import 'edit_profile_doc.dart';
-import 'firebase_options.dart';
-import 'signup.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.android,
-  );
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-
-  // This widget is the root of your application.
+class SignupPage extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
-      debugShowCheckedModeBanner: false,
-      routes: <String, WidgetBuilder>{
-        '/signup': (BuildContext context) => new SignupPage()
-      },
-    );
-  }
+  _SignupPageState createState() => _SignupPageState();
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
+class _SignupPageState extends State<SignupPage> {
 
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  int _success = 1;
-  String _userEmail = "";
-
-
-
+  bool _sucess=false;
+  late String _userEmail;
 
   @override
   Widget build(BuildContext context) {
@@ -74,25 +29,23 @@ class _MyHomePageState extends State<MyHomePage> {
             const edit_profile_doc()),
       );
     }
-    void _singIn() async {
-      final User? user = (await _auth.signInWithEmailAndPassword(email: _emailController.text, password: _passwordController.text)).user;
+    void _register() async {
+      final User? user = (
+          await _auth.createUserWithEmailAndPassword(email: _emailController.text, password: _passwordController.text)
+      ).user;
 
       if(user != null) {
         setState(() {
-          _success = 2;
+          _sucess = true;
           _userEmail = user.email!;
         });
       } else {
         setState(() {
-          _success = 3;
+          _sucess = false;
         });
       }
-      if(_success==2) {
-        goToProfile();
-      }
+      if(_sucess) goToProfile();
     }
-
-
     return new Scaffold(
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -102,7 +55,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 children: <Widget>[
                   Container(
                     padding: EdgeInsets.fromLTRB(15, 110, 0, 0),
-                    child: Text("Welcome",
+                    child: Text("SignUp",
                         style: TextStyle(
                             fontSize: 40, fontWeight: FontWeight.bold
                         )
@@ -146,30 +99,6 @@ class _MyHomePageState extends State<MyHomePage> {
                     obscureText: true,
                   ),
                   SizedBox(height: 5.0,),
-                  Container(
-                    alignment: Alignment(1,0),
-                    padding: EdgeInsets.only(top: 15, left: 20),
-                    child: InkWell(
-                      child: Text(
-                        'Forgot Password',
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: 'Montserrat',
-                            decoration: TextDecoration.underline
-                        ),
-                      ),
-                    ),
-                  ),
-                  Container(
-                      alignment: Alignment.center,
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      child: Text(
-                        _success == 1 ? '' : (_success == 2 ? '' : 'Sign in failed'),
-                        style: TextStyle(color: Colors.red),
-                      )
-                  ),
-
                   SizedBox(height: 40,),
                   Container(
                     height: 40,
@@ -180,11 +109,11 @@ class _MyHomePageState extends State<MyHomePage> {
                       elevation: 7,
                       child: GestureDetector(
                           onTap: () async{
-                            _singIn();
+                            _register();
                           },
                           child: Center(
                               child: Text(
-                                  'LOGIN',
+                                  'SIGNUP',
                                   style: TextStyle(
                                       color: Colors.white,
                                       fontWeight: FontWeight.bold,
@@ -201,10 +130,10 @@ class _MyHomePageState extends State<MyHomePage> {
                     children: <Widget>[
                       InkWell(
                         onTap: () {
-                          Navigator.of(context).pushNamed('/signup');
+                          Navigator.of(context).pop();
                         },
                         child: Text(
-                            'Register',
+                            'Go Back',
                             style: TextStyle(
                                 color: Colors.blueGrey,
                                 fontFamily: 'Montserrat',
@@ -222,5 +151,4 @@ class _MyHomePageState extends State<MyHomePage> {
         )
     );
   }
-
 }

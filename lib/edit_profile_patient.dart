@@ -121,22 +121,22 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 height: 35,
               ),
               Padding(
-              padding: const EdgeInsets.only(bottom: 35.0),
-              child: TextField(
-                onChanged: (value){
-                  nm = value;
-                },
-                decoration: InputDecoration(
-                    contentPadding: const EdgeInsets.only(bottom: 3),
-                    labelText: "Name",
-                    floatingLabelBehavior: FloatingLabelBehavior.always,
-                    // hintText: placeholder,
-                    labelStyle: const TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                    )),
-              ),
+                padding: const EdgeInsets.only(bottom: 35.0),
+                child: TextField(
+                  onChanged: (value){
+                    nm = value;
+                  },
+                  decoration: InputDecoration(
+                      contentPadding: const EdgeInsets.only(bottom: 3),
+                      labelText: "Name",
+                      floatingLabelBehavior: FloatingLabelBehavior.always,
+                      // hintText: placeholder,
+                      labelStyle: const TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      )),
+                ),
               ),
               Padding(
                 padding: const EdgeInsets.only(bottom: 35.0),
