@@ -1,9 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 
+import 'Patient-pages/home_screen_patient.dart';
 import 'edit_profile_doc.dart';
 import 'firebase_options.dart';
+import 'home_screen.dart';
 import 'signup.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -39,15 +42,6 @@ class MyApp extends StatelessWidget {
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key, required this.title}) : super(key: key);
 
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
   final String title;
 
   @override
@@ -62,14 +56,36 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    void goToProfile() {
+    void goToProfile(String qr) {
+      if(qr=="Doctor" || qr=="doctor"){
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => const edit_profile_doc()),
-      );
+      );}
+      else{
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const edit_profile_doc()), //todo:add edit profile patient
+        );
+      }
     }
 
-    void _singIn() async {
+    void goToHomescreen(String qr) {
+      if(qr=="Doctor" || qr=="doctor"){
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const HomeScreen()),
+        );
+      }
+      else{
+      Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const HomeScreen1()),
+      );
+      }
+    }
+
+    void _singIn(String u) async {
       final User? user = (await _auth.signInWithEmailAndPassword(
               email: _emailController.text, password: _passwordController.text))
           .user;
@@ -85,10 +101,35 @@ class _MyHomePageState extends State<MyHomePage> {
         });
       }
       if (_success == 2) {
-        goToProfile();
-      }
-    }
+        CollectionReference? users ;
+        if(u=="Doctor" || u=="doctor"){
+         users =
+          FirebaseFirestore.instance.collection('Doctor');}
+        else if(u=="Patient" || u=="patient"){
+          users =
+          FirebaseFirestore.instance.collection('Patient');
+        }
+        else{
+          users = null;
+        }
 
+          if(users!=null){
+            final docRef = users.doc(FirebaseAuth.instance.currentUser?.uid);
+            docRef.get().then(
+                  (DocumentSnapshot doc) {
+                final data = doc.data() as Map<String, dynamic>;
+                if (data['Name'] == "")
+                  goToProfile(u);
+                else
+                  goToHomescreen(u);
+              },
+              onError: (e) => print("Error getting document: $e"),
+            );
+          }
+          else print("Error");
+        }
+      }
+  String po="";
     return Scaffold(
         body: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -140,19 +181,19 @@ class _MyHomePageState extends State<MyHomePage> {
               SizedBox(
                 height: 5.0,
               ),
-              Container(
-                alignment: Alignment(1, 0),
-                padding: EdgeInsets.only(top: 15, left: 20),
-                child: InkWell(
-                  child: Text(
-                    'Forgot Password',
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
+              TextField(
+                onChanged: (value) {
+                  po = value;
+                },
+                decoration: InputDecoration(
+                    labelText: 'Doctor/Patient',
+                    labelStyle: TextStyle(
                         fontFamily: 'Montserrat',
-                        decoration: TextDecoration.underline),
-                  ),
-                ),
+                        fontWeight: FontWeight.bold,
+                        color: Colors.grey),
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.green),
+                    )),
               ),
               Container(
                   alignment: Alignment.center,
@@ -169,7 +210,7 @@ class _MyHomePageState extends State<MyHomePage> {
               Container(
                 child: ElevatedButton(
                   onPressed: () async {
-                    _singIn();
+                    _singIn(po);
                   },
                   child: const Text("LOGIN",
                       style: TextStyle(

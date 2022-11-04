@@ -37,11 +37,10 @@ class _EditProfilePageState extends State<EditProfilePage> {
   CollectionReference users = FirebaseFirestore.instance.collection('Doctor');
 
   //Future<void> addUser(String N,String E,double C,String S)
-  String sp="", nm="", em="";
-  double ct=0;
+  String sp = "", nm = "", em = "";
+  double ct = 0;
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blue,
@@ -122,27 +121,27 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 height: 35,
               ),
               Padding(
-              padding: const EdgeInsets.only(bottom: 35.0),
-              child: TextField(
-                onChanged: (value){
-                  nm = value;
-                },
-                decoration: InputDecoration(
-                    contentPadding: const EdgeInsets.only(bottom: 3),
-                    labelText: "Name",
-                    floatingLabelBehavior: FloatingLabelBehavior.always,
-                    // hintText: placeholder,
-                    labelStyle: const TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                    )),
-              ),
+                padding: const EdgeInsets.only(bottom: 35.0),
+                child: TextField(
+                  onChanged: (value) {
+                    nm = value;
+                  },
+                  decoration: InputDecoration(
+                      contentPadding: const EdgeInsets.only(bottom: 3),
+                      labelText: "Name",
+                      floatingLabelBehavior: FloatingLabelBehavior.always,
+                      // hintText: placeholder,
+                      labelStyle: const TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      )),
+                ),
               ),
               Padding(
                 padding: const EdgeInsets.only(bottom: 35.0),
                 child: TextField(
-                  onChanged: (value){
+                  onChanged: (value) {
                     em = value;
                   },
                   decoration: InputDecoration(
@@ -170,7 +169,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                         fontWeight: FontWeight.bold,
                         color: Colors.black,
                       )),
-                  onChanged: (value){
+                  onChanged: (value) {
                     ct = double.parse(value);
                   },
                 ),
@@ -178,7 +177,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
               Padding(
                 padding: const EdgeInsets.only(bottom: 35.0),
                 child: TextField(
-                  onChanged: (value){
+                  onChanged: (value) {
                     sp = value;
                   },
                   decoration: InputDecoration(
@@ -200,9 +199,15 @@ class _EditProfilePageState extends State<EditProfilePage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  OutlinedButton(
-                    onPressed: () {},
-                    style: OutlinedButton.styleFrom(
+                  ElevatedButton(
+                    onPressed: () async {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const HomeScreen()),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
                         padding: const EdgeInsets.symmetric(horizontal: 30),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20))),
@@ -213,25 +218,26 @@ class _EditProfilePageState extends State<EditProfilePage> {
                             //  fontWeight: FontWeight.bold,
                             color: Colors.black)),
                   ),
-
                   ElevatedButton(
                     onPressed: () async {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) =>
-                            const HomeScreen()),
+                            builder: (context) => const HomeScreen()),
                       );
                       // Call the user's CollectionReference to add a new user
-                      return await users.doc(FirebaseAuth.instance.currentUser?.uid).update({"Name": nm,
-                        "Specialisation": sp,
-                        "contact no": ct,
-                        "Address": em,})
+                      return await users
+                          .doc(FirebaseAuth.instance.currentUser?.uid)
+                          .update({
+                            "Name": nm,
+                            "Specialisation": sp,
+                            "contact no": ct,
+                            "Address": em,
+                          })
                           .then((value) => print("User Added"))
-                          .catchError((error) => print("Failed to add user: $error"));
-
+                          .catchError(
+                              (error) => print("Failed to add user: $error"));
                     },
-
                     style: ElevatedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(horizontal: 40),
                       foregroundColor: Colors.white,
@@ -242,14 +248,12 @@ class _EditProfilePageState extends State<EditProfilePage> {
                         ),
                       ),
                     ),
-
                     child: const Text("SAVE",
                         style: TextStyle(
                             fontSize: 14,
                             letterSpacing: 2.2,
                             color: Colors.white)),
                   ),
-
                 ],
               )
             ],

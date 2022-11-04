@@ -67,15 +67,15 @@ flutter:
   uses-material-design: true
 
   assets:
-    - assets/images/imgs.png
-    - assets/images/imgs2.png
-    - assets/images/imgdoc2.png
-    - assets/images/imgpatients.jpg
-    - assets/images/imgdoctor.png
-    - assets/images/imgcalender.jpg
-    - assets/images/imgrequests.png
-    - assets/images/imgdefault.png
-  # - assets/images/imgbgrnd.jpg
+   - assets/images/
+#    - assets/images/imgs2.png
+#    - assets/images/imgdoc2.png
+#    - assets/images/imgpatients.jpg
+#    - assets/images/imgdoctor.png
+#    - assets/images/imgcalender.jpg
+#    - assets/images/imgrequests.png
+#    - assets/images/imgdefault.png
+#  # - assets/images/imgbgrnd.jpg
 
 
 

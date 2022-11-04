@@ -29,8 +29,10 @@ class _SignupPageState extends State<SignupPage> {
       );
     }
 
-    void _register() async {
-      var user = _auth
+    void _register(String u) async {
+      var user;
+      if(u=="Doctor" || u=="doctor"){
+      user = _auth
           .createUserWithEmailAndPassword(
               email: _emailController.text, password: _passwordController.text)
           .then((value) {
@@ -38,8 +40,25 @@ class _SignupPageState extends State<SignupPage> {
             .collection('Doctor')
             .doc(value.user?.uid)
             .set({"Email": value.user?.email,
+          "Name": "",
+          "Doctor": u,
             });
-      });
+      });}
+      else if(u=="Patient" || u=="patient"){
+        user = _auth
+            .createUserWithEmailAndPassword(
+            email: _emailController.text, password: _passwordController.text)
+            .then((value) {
+          FirebaseFirestore.instance
+              .collection('Patient')
+              .doc(value.user?.uid)
+              .set({"Email": value.user?.email,
+            "Name": "",
+            "Patient": u,
+          });
+        });
+      }
+      else user = null;
 
       if (user != null) {
         setState(() {
@@ -53,6 +72,7 @@ class _SignupPageState extends State<SignupPage> {
       if (_sucess) goToLogin();
     }
 
+    String ty="";
     return new Scaffold(
         body: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -104,26 +124,44 @@ class _SignupPageState extends State<SignupPage> {
               SizedBox(
                 height: 5.0,
               ),
+              TextField(
+                onChanged: (value) {
+                  ty = value;
+                },
+                decoration: InputDecoration(
+                    labelText: 'Doctor/Patient',
+                    labelStyle: TextStyle(
+                        fontFamily: 'Montserrat',
+                        fontWeight: FontWeight.bold,
+                        color: Colors.grey),
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.green),
+                    )),
+              ),
               SizedBox(
                 height: 40,
               ),
               Container(
                 height: 40,
-                child: Material(
-                  borderRadius: BorderRadius.circular(20),
-                  shadowColor: Colors.greenAccent,
-                  color: Colors.black,
-                  elevation: 7,
-                  child: GestureDetector(
-                      onTap: () async {
-                        _register();
-                      },
-                      child: Center(
-                          child: Text('SIGNUP',
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontFamily: 'Montserrat')))),
+                child: ElevatedButton(
+                  onPressed: () async {
+                    _register(ty);
+                  },
+                  child: const Text("SIGN UP",
+                      style: TextStyle(
+                          fontSize: 20,
+                          letterSpacing: 2.2,
+                          color: Colors.white)),
+                  style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(horizontal: 40),
+                    foregroundColor: Colors.white,
+                    backgroundColor: Colors.blue, // foreground
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(20),
+                      ),
+                    ),
+                  ),
                 ),
               ),
               SizedBox(

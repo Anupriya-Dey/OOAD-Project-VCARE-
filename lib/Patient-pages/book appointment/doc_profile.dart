@@ -1,10 +1,6 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import 'edit_profile_doc.dart';
-// import 'package:ooadproject/patient/book%20appointment/book_appointment.dart';
-
+import 'book_appointment.dart';
 // import 'package:ooadproject/doctor/medical%20folder/patient_history.dart';
 
 // ignore: camel_case_types
@@ -19,13 +15,10 @@ class viewDocProfile extends StatefulWidget {
 class _viewDocProfileState extends State<viewDocProfile> {
   @override
   Widget build(BuildContext context) {
-    CollectionReference users = FirebaseFirestore.instance.collection('Doctor');
-
     Widget buildDivider() => Container(
           height: 24,
           child: VerticalDivider(),
         );
-
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.blue,
@@ -81,55 +74,32 @@ class _viewDocProfileState extends State<viewDocProfile> {
                   const SizedBox(
                     height: 15,
                   ),
-                  Container(
-                    child: FutureBuilder<DocumentSnapshot>(
-                      future: users
-                          .doc(FirebaseAuth.instance.currentUser?.uid)
-                          .get(),
-                      builder: (BuildContext context,
-                          AsyncSnapshot<DocumentSnapshot> snapshot) {
-                        if (snapshot.connectionState == ConnectionState.done) {
-                          Map<String, dynamic> data =
-                              snapshot.data!.data() as Map<String, dynamic>;
-                          return Column(
-                            children: [
-                              const SizedBox(
-                                height: 15,
-                              ),
-                              Text(
-                                data['Name'],
-                                style: TextStyle(
-                                    height: 1,
-                                    color: Colors.grey[800],
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 30),
-                              ),
-                              Text(
-                                data['Specialisation'],
-                                style: TextStyle(
-                                    height: 2,
-                                    color: Colors.grey[800],
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 25),
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: <Widget>[
-                                  Text(data['contact no'].toString()),
-                                  buildDivider(),
-                                  Text(data['Email']),
-                                ],
-                              ),
-                              const SizedBox(
-                                height: 50,
-                              ),
-                            ],
-                          );
-                        }
-
-                        return Text("loading");
-                      },
-                    ),
+                  Text(
+                    'Dr Komal Gupta',
+                    style: TextStyle(
+                        height: 1,
+                        color: Colors.grey[800],
+                        fontWeight: FontWeight.bold,
+                        fontSize: 30),
+                  ),
+                  Text(
+                    'Psychiatrist',
+                    style: TextStyle(
+                        height: 2,
+                        color: Colors.grey[800],
+                        fontWeight: FontWeight.bold,
+                        fontSize: 25),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Text("9509389255"),
+                      buildDivider(),
+                      Text("kgupta2906@gmail.com"),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 50,
                   ),
                   OutlinedButton(
                     onPressed: () {
@@ -137,7 +107,7 @@ class _viewDocProfileState extends State<viewDocProfile> {
                           context,
                           MaterialPageRoute(
                               builder: (context) =>
-                                  edit_profile_doc()));
+                                  FlutterDatePickerExample()));
                     },
                     style: OutlinedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(horizontal: 50),
@@ -145,10 +115,10 @@ class _viewDocProfileState extends State<viewDocProfile> {
                     ),
                     child: const Padding(
                       padding: EdgeInsets.all(15),
-                      child: Text('Edit Profile',
+                      child: Text('Book Appointment',
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                            // height: 2,
+                              // height: 2,
                               fontSize: 17,
                               letterSpacing: 1,
                               fontWeight: FontWeight.bold,
@@ -193,4 +163,21 @@ class _viewDocProfileState extends State<viewDocProfile> {
               )
             ])));
   }
+  // Widget buildTextField(
+  //     String labelText) {
+  //   return Padding(
+  //     padding: const EdgeInsets.only(bottom: 35.0),
+  //     child: TextField(
+  //       decoration: InputDecoration(
+  //           contentPadding: const EdgeInsets.only(bottom: 3),
+  //           labelText: labelText,
+  //           floatingLabelBehavior: FloatingLabelBehavior.always,
+  //           labelStyle: const TextStyle(
+  //             fontSize: 25,
+  //             fontWeight: FontWeight.bold,
+  //             color: Colors.black,
+  //           )),
+  //     ),
+  //   );
+  // }
 }
