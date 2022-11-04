@@ -1,8 +1,11 @@
 import 'dart:ui';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:ooadproject/patient_profile.dart';
 
 import '../medical history/patient_history.dart';
 import 'book appointment/search_dr_tab.dart';
@@ -21,6 +24,8 @@ class HomeScreen1 extends StatefulWidget {
 class _HomeScreen1State extends State<HomeScreen1> {
   @override
   Widget build(BuildContext context) {
+    CollectionReference users = FirebaseFirestore.instance.collection('Patient');
+
     var cardTextStyle = TextStyle(
         fontFamily: 'AbrilFatface Regular', fontSize: 20, color: Colors.black);
     return Scaffold(
@@ -48,20 +53,36 @@ class _HomeScreen1State extends State<HomeScreen1> {
                       const SizedBox(
                         width: 16,
                       ),
-                      Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: const <Widget>[
-                            Text('AVDD',
-                                style: TextStyle(
-                                    fontFamily: 'AbrilFatface Regular',
-                                    color: Colors.black87,
-                                    fontSize: 20)),
-                            Text('32343',
-                                style: TextStyle(
-                                    fontFamily: 'AbrilFatface Regular',
-                                    color: Colors.black54)),
-                          ])
+                      Container(
+                        child: FutureBuilder<DocumentSnapshot>(
+                          future: users
+                              .doc(FirebaseAuth.instance.currentUser?.uid)
+                              .get(),
+                          builder: (BuildContext context,
+                              AsyncSnapshot<DocumentSnapshot> snapshot) {
+                            if (snapshot.connectionState == ConnectionState.done) {
+                              Map<String, dynamic> data =
+                              snapshot.data!.data() as Map<String, dynamic>;
+                              return Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Text(data['Name'],
+                                        style: TextStyle(
+                                            fontFamily: 'AbrilFatface Regular',
+                                            color: Colors.black87,
+                                            fontSize: 20)),
+                                    Text(data['Email'],
+                                        style: TextStyle(
+                                            fontFamily: 'AbrilFatface Regular',
+                                            color: Colors.black54)),
+                                  ]);
+                            }
+
+                            return Text("loading");
+                          },
+                        ),
+                      ),
                     ])),
             Expanded(
                 child: GridView.count(
@@ -87,7 +108,7 @@ class _HomeScreen1State extends State<HomeScreen1> {
                             children: <Widget>[
                               Expanded(
                                 child: Image.asset(
-                                  'assets/images/imgcalendar2.png',
+                                  'assets/images/imgcalendar.png',
                                   fit: BoxFit.cover,
                                 ),
                               ),
@@ -167,12 +188,12 @@ class _HomeScreen1State extends State<HomeScreen1> {
                         borderRadius: BorderRadius.circular(8)),
                     elevation: 4,
                     child: InkWell(
-                        // onTap: () => Navigator.push(
-                        //       context,
-                        //       MaterialPageRoute(
-                        //           builder: (context) =>
-                        //               const edit_profile_doc()),
-                        //     ),
+                        onTap: () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      const viewPatientProfile()),
+                            ),
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 4),
                           child: Column(

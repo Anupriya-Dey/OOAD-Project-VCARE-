@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 
+import 'Patient-pages/edit_patient.dart';
 import 'Patient-pages/home_screen_patient.dart';
 import 'edit_profile_doc.dart';
 import 'firebase_options.dart';
@@ -16,6 +17,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.android,
   );
+  // const db = firebase.firestore();
   runApp(MyApp());
 }
 
@@ -65,7 +67,7 @@ class _MyHomePageState extends State<MyHomePage> {
       else{
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => const edit_profile_doc()), //todo:add edit profile patient
+          MaterialPageRoute(builder: (context) => const edit_patient()),
         );
       }
     }

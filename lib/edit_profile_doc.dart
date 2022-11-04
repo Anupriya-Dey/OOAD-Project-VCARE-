@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:ooadproject/home_screen.dart';
 // import 'package:ooadproject/home_screen.dart';
@@ -35,9 +36,20 @@ class EditProfilePage extends StatefulWidget {
 class _EditProfilePageState extends State<EditProfilePage> {
   bool showPassword = false;
   CollectionReference users = FirebaseFirestore.instance.collection('Doctor');
+  // CollectionReference UT = FirebaseFirestore.instance.collection('Doc-list');
+  //
+  //
+  // Future<void> addUser() {
+  //   // Call the user's CollectionReference to add a new user
+  //   return UT.doc('100')
+  //       .update({
+  //     (FirebaseAuth.instance.currentUser?.uid).toString(): FirebaseAuth.instance.currentUser?.uid,
+  //   }).then((value) => print("User Added"))
+  //       .catchError((error) => print("Failed to add user: $error"));
+  // }
 
-  //Future<void> addUser(String N,String E,double C,String S)
-  String sp = "", nm = "", em = "";
+
+  String sp = "", nm = "", em = "",educ="";
   double ct = 0;
   @override
   Widget build(BuildContext context) {
@@ -192,6 +204,24 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       )),
                 ),
               ),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 35.0),
+                child: TextField(
+                  onChanged: (value) {
+                    educ = value;
+                  },
+                  decoration: InputDecoration(
+                      contentPadding: const EdgeInsets.only(bottom: 3),
+                      labelText: "Educational Details",
+                      floatingLabelBehavior: FloatingLabelBehavior.always,
+                      // hintText: placeholder,
+                      labelStyle: const TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      )),
+                ),
+              ),
 
               const SizedBox(
                 height: 35,
@@ -225,6 +255,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                         MaterialPageRoute(
                             builder: (context) => const HomeScreen()),
                       );
+                      //addUser();
                       // Call the user's CollectionReference to add a new user
                       return await users
                           .doc(FirebaseAuth.instance.currentUser?.uid)
@@ -233,10 +264,11 @@ class _EditProfilePageState extends State<EditProfilePage> {
                             "Specialisation": sp,
                             "contact no": ct,
                             "Address": em,
+                            "Educational Details": educ,
                           })
-                          .then((value) => print("User Added"))
+                          .then((value) => print("Profile updated"))
                           .catchError(
-                              (error) => print("Failed to add user: $error"));
+                              (error) => print("Failed to update: $error"));
                     },
                     style: ElevatedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(horizontal: 40),

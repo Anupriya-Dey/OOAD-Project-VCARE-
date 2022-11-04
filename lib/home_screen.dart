@@ -1,8 +1,11 @@
 import 'dart:ui';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:ooadproject/requests.dart';
 import 'Patients.dart';
 import 'doc_profile.dart';
 import 'medical%20history/patient_history.dart';
@@ -19,6 +22,8 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     // var size = MediaQuery.of(context).size;
+    CollectionReference users = FirebaseFirestore.instance.collection('Doctor');
+
     var cardTextStyle = TextStyle(
         fontFamily: 'AbrilFatface Regular', fontSize: 20, color: Colors.black);
     return Scaffold(
@@ -51,20 +56,36 @@ class _HomeScreenState extends State<HomeScreen> {
                       const SizedBox(
                         width: 16,
                       ),
-                      Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: const <Widget>[
-                            Text('AVDD',
-                                style: TextStyle(
-                                    fontFamily: 'AbrilFatface Regular',
-                                    color: Colors.black87,
-                                    fontSize: 20)),
-                            Text('32343',
-                                style: TextStyle(
-                                    fontFamily: 'AbrilFatface Regular',
-                                    color: Colors.black54)),
-                          ])
+                      Container(
+                        child: FutureBuilder<DocumentSnapshot>(
+                          future: users
+                              .doc(FirebaseAuth.instance.currentUser?.uid)
+                              .get(),
+                          builder: (BuildContext context,
+                              AsyncSnapshot<DocumentSnapshot> snapshot) {
+                            if (snapshot.connectionState == ConnectionState.done) {
+                              Map<String, dynamic> data =
+                              snapshot.data!.data() as Map<String, dynamic>;
+                              return Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Text(data['Name'],
+                                        style: TextStyle(
+                                            fontFamily: 'AbrilFatface Regular',
+                                            color: Colors.black87,
+                                            fontSize: 20)),
+                                    Text(data['Email'],
+                                        style: TextStyle(
+                                            fontFamily: 'AbrilFatface Regular',
+                                            color: Colors.black54)),
+                                  ]);
+                            }
+
+                            return Text("loading");
+                          },
+                        ),
+                      ),
                     ])),
             Expanded(
                 child: GridView.count(
@@ -157,31 +178,38 @@ class _HomeScreenState extends State<HomeScreen> {
                           borderRadius: BorderRadius.circular(8)),
                       elevation: 4,
                       // child: Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Expanded(
-                              child: Image.asset(
-                                'assets/images/imgcalender.jpg',
-                                // height: 100.0,
-                                fit: BoxFit.cover,
+                      child: InkWell(
+                        // onTap: () => Navigator.push(
+                        //   context,
+                        //   MaterialPageRoute(
+                        //       builder: (context) => CalendarAppointment()),//IMPORT SCHEDULE.DART
+                        // ),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Expanded(
+                                child: Image.asset(
+                                  'assets/images/imgcalender.jpg',
+                                  // height: 100.0,
+                                  fit: BoxFit.cover,
+                                ),
                               ),
-                            ),
-                            // Expanded(
-                            // child: Padding(
-                            //     padding:
-                            //         EdgeInsets.fromLTRB(10, 10, 10, 10),
-                            Text(
-                              'Appointments',
-                              style: cardTextStyle,
-                              textAlign: TextAlign.center,
-                              // overflow: TextOverflow.ellipsis,
-                            )
-                            // )
-                            // )
-                          ],
+                              // Expanded(
+                              // child: Padding(
+                              //     padding:
+                              //         EdgeInsets.fromLTRB(10, 10, 10, 10),
+                              Text(
+                                'Appointments',
+                                style: cardTextStyle,
+                                textAlign: TextAlign.center,
+                                // overflow: TextOverflow.ellipsis,
+                              )
+                              // )
+                              // )
+                            ],
+                          ),
                         ),
                       )
                       // )
@@ -191,25 +219,32 @@ class _HomeScreenState extends State<HomeScreen> {
                           borderRadius: BorderRadius.circular(8)),
                       elevation: 4,
                       // child: Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Expanded(
-                              child: Image.asset(
-                                'assets/images/imgrequests.png',
-                                // height: 100.0,
-                                fit: BoxFit.cover,
-                              ),
+                      child: InkWell(
+                          onTap: () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => MyRequests()),
                             ),
-                            Text(
-                              'Requests',
-                              style: cardTextStyle,
-                              textAlign: TextAlign.center,
-                              // overflow: TextOverflow.ellipsis,
-                            )
-                          ],
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Expanded(
+                                child: Image.asset(
+                                  'assets/images/imgrequests.png',
+                                  // height: 100.0,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                              Text(
+                                'Requests',
+                                style: cardTextStyle,
+                                textAlign: TextAlign.center,
+                                // overflow: TextOverflow.ellipsis,
+                              )
+                            ],
+                          ),
                         ),
                       )
                       // )

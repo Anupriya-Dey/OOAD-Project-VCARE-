@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'medical%20history/patient_history.dart';
 
@@ -12,6 +14,7 @@ class viewPatientProfile extends StatefulWidget {
 class _viewPatientProfileState extends State<viewPatientProfile> {
   @override
   Widget build(BuildContext context) {
+    CollectionReference users = FirebaseFirestore.instance.collection('Patient');
     Widget buildDivider() => Container(
           height: 24,
           child: VerticalDivider(),
@@ -67,25 +70,56 @@ class _viewPatientProfileState extends State<viewPatientProfile> {
                         image: NetworkImage(
                             "https://www.kindpng.com/picc/m/451-4517876_default-profile-hd-png-download.png"))),
               ),
+              Container(
+                child: FutureBuilder<DocumentSnapshot>(
+                  future: users
+                      .doc(FirebaseAuth.instance.currentUser?.uid)
+                      .get(),
+                  builder: (BuildContext context,
+                      AsyncSnapshot<DocumentSnapshot> snapshot) {
+                    if (snapshot.connectionState == ConnectionState.done) {
+                      Map<String, dynamic> data =
+                      snapshot.data!.data() as Map<String, dynamic>;
+                      return Column(
+                        children: [
+                          const SizedBox(
+                            height: 15,
+                          ),
+                          Text(
+                            data['Name'],
+                            style: TextStyle(
+                                height: 2,
+                                color: Colors.grey[800],
+                                fontWeight: FontWeight.bold,
+                                fontSize: 30),
+                          ),
+                          Text(
+                            data['Specialisation'],
+                            style: TextStyle(
+                                height: 2,
+                                color: Colors.grey[800],
+                                fontWeight: FontWeight.bold,
+                                fontSize: 25),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Text(data['ct']),
+                              buildDivider(),
+                              Text(data['Email']),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 50,
+                          ),
+                        ],
+                      );
+                    }
 
-              Text(
-                'Komal Gupta',
-                style: TextStyle(
-                    height: 2,
-                    color: Colors.grey[800],
-                    fontWeight: FontWeight.bold,
-                    fontSize: 30),
+                    return Text("loading");
+                  },
+                ),
               ),
-
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text("9876436789"),
-                  buildDivider(),
-                  Text("n_khg@gm.cm"),
-                ],
-              ),
-
               const SizedBox(
                 height: 100,
               ),
