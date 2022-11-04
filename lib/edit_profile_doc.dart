@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:ooadproject/home_screen.dart';
 // import 'package:ooadproject/home_screen.dart';
@@ -146,7 +147,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   },
                   decoration: InputDecoration(
                       contentPadding: const EdgeInsets.only(bottom: 3),
-                      labelText: "E-mail",
+                      labelText: "Address",
                       floatingLabelBehavior: FloatingLabelBehavior.always,
                       // hintText: placeholder,
                       labelStyle: const TextStyle(
@@ -222,16 +223,12 @@ class _EditProfilePageState extends State<EditProfilePage> {
                             const HomeScreen()),
                       );
                       // Call the user's CollectionReference to add a new user
-                      return await users
-                          .add({
-                        'Name': nm,
-                        'contact no.' : ct,
-                        'Specialisation' : sp,
-                        'Email' : em
-                      })
+                      return await users.doc(FirebaseAuth.instance.currentUser?.uid).update({"Name": nm,
+                        "Specialisation": sp,
+                        "contact no": ct,
+                        "Address": em,})
                           .then((value) => print("User Added"))
                           .catchError((error) => print("Failed to add user: $error"));
-
 
                     },
 

@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'Patients.dart';
+import 'doc_profile.dart';
 import 'medical%20history/patient_history.dart';
 import 'edit_profile_doc.dart';
 
@@ -81,7 +82,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               context,
                               MaterialPageRoute(
                                   builder: (context) =>
-                                      const edit_profile_doc()),
+                                      const viewDocProfile()),
                             ),
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 40),

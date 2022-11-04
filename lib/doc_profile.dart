@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ooadproject/patient/book%20appointment/book_appointment.dart';
+// import 'package:ooadproject/patient/book%20appointment/book_appointment.dart';
 
 // import 'package:ooadproject/doctor/medical%20folder/patient_history.dart';
 
@@ -102,13 +102,14 @@ class _viewDocProfileState extends State<viewDocProfile> {
                     height: 50,
                   ),
                   OutlinedButton(
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  FlutterDatePickerExample()));
-                    },
+                    // onPressed: () {
+                    //   Navigator.push(
+                    //       context,
+                    //       MaterialPageRoute(
+                    //           builder: (context) =>
+                    //               FlutterDatePickerExample()));
+                    // },
+                    onPressed: null,
                     style: OutlinedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(horizontal: 50),
                       backgroundColor: Color.fromARGB(77, 94, 98, 99),
