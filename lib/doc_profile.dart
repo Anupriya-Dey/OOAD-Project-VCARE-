@@ -136,8 +136,7 @@ class _viewDocProfileState extends State<viewDocProfile> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) =>
-                                  edit_profile_doc()));
+                              builder: (context) => edit_profile_doc()));
                     },
                     style: OutlinedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(horizontal: 50),
@@ -148,7 +147,7 @@ class _viewDocProfileState extends State<viewDocProfile> {
                       child: Text('Edit Profile',
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                            // height: 2,
+                              // height: 2,
                               fontSize: 17,
                               letterSpacing: 1,
                               fontWeight: FontWeight.bold,
@@ -161,36 +160,47 @@ class _viewDocProfileState extends State<viewDocProfile> {
                   // buildTextField("Educational Details"),
                 ],
               ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Padding(
-                      padding: const EdgeInsets.only(right: 120.0),
-                      child: Text('Educational Details',
-                          style: TextStyle(
-                              height: 2,
-                              color: Colors.grey[800],
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18),
-                          textAlign: TextAlign.left)),
-                  Padding(
-                      padding: const EdgeInsets.only(right: 100.0),
-                      child: Text(
-                        'First Text' +
-                            '\n' +
-                            'Second Text' +
-                            '\n' +
-                            'Third Text',
-                        textAlign: TextAlign.start,
-                        style: TextStyle(
-                            height: 2,
-                            color: Colors.grey[800],
-                            // fontWeight: FontWeight.bold,
-                            fontSize: 15),
-                      )),
-                ],
-              )
+              Container(
+                child: FutureBuilder<DocumentSnapshot>(
+                  future:
+                      users.doc(FirebaseAuth.instance.currentUser?.uid).get(),
+                  builder: (BuildContext context,
+                      AsyncSnapshot<DocumentSnapshot> snapshot) {
+                    if (snapshot.connectionState == ConnectionState.done) {
+                      Map<String, dynamic> data =
+                          snapshot.data!.data() as Map<String, dynamic>;
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Padding(
+                              padding: const EdgeInsets.only(right: 120.0),
+                              child: Text('Educational Details',
+                                  style: TextStyle(
+                                      height: 2,
+                                      color: Colors.grey[800],
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 18),
+                                  textAlign: TextAlign.left)),
+                          Padding(
+                              padding: const EdgeInsets.only(right: 100.0),
+                              child: Text(
+                                data['Educational Details'],
+                                textAlign: TextAlign.start,
+                                style: TextStyle(
+                                    height: 2,
+                                    color: Colors.grey[800],
+                                    // fontWeight: FontWeight.bold,
+                                    fontSize: 15),
+                              )),
+                        ],
+                      );
+                    }
+
+                    return Text("loading");
+                  },
+                ),
+              ),
             ])));
   }
 }

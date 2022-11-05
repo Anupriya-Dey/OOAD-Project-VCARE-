@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:ooadproject/Patient-pages/book%20appointment/Book_appointment_doc_profile.dart';
 
 import '../../doc_profile.dart';
 
@@ -82,25 +83,25 @@ class CustomSearchDelegate extends SearchDelegate {
       icon: Icon(Icons.arrow_back),
     );
   }
-  var matchQuery = new List.filled(4, null, growable: true);
+  // var matchQuery = new List.filled(4, null, growable: true);
   // third overwrite to show query result
   @override
   Widget buildResults(BuildContext context) {
-    // List<String> matchQuery = [];
+    List<String> matchQuery = [];
 
     db.collection("Doctor")
         .snapshots()
         .listen((event) {
-          int i=1;
+
       //List<QueryDocumentSnapshot<Map<String, dynamic>>> matchQuery = [];
       for (var doc in event.docs) {
 
         if (doc['Name'].toLowerCase().contains(query.toLowerCase())) {
-          matchQuery[i]=(doc['Name']);
-          i=i+1;
+          matchQuery.add(doc['Name']);
+
         }
-      // print("cities in CA: ${cities.join(", ")}");
-    }});
+        // print("cities in CA: ${cities.join(", ")}");
+      }});
 
 
     return ListView.builder(
@@ -108,14 +109,14 @@ class CustomSearchDelegate extends SearchDelegate {
       itemBuilder: (context, index) {
         var result = matchQuery[index];
         return ListTile(
-            title:
-            Text(result, style: const TextStyle(color: Colors.black87)),
-            //subtitle: Text(result['Specialisation']),
+          title:
+          Text(result, style: const TextStyle(color: Colors.black87)),
+          //subtitle: Text(result['Specialisation']),
           onTap: () {
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => const viewDocProfile()));
+                    builder: (context) => const viewDocProfileBook()));
           },
           //leading: result.prfl,
 
@@ -130,17 +131,17 @@ class CustomSearchDelegate extends SearchDelegate {
   @override
   Widget buildSuggestions(BuildContext context) {
 
-
+    List<String> matchQuery = [];
     db.collection("Doctor")
         .snapshots()
         .listen((event) {
-      //List<QueryDocumentSnapshot<Map<String, dynamic>>> matchQuery = [];
-      int i = 1;
+      // List<QueryDocumentSnapshot<Map<String, dynamic>>> matchQuery = [];
+
       for (var doc in event.docs) {
 
         if (doc['Name'].toLowerCase().contains(query.toLowerCase())) {
-          matchQuery[i]=(doc['Name']);
-          i=i+1;
+          matchQuery.add(doc['Name']);
+
         }
         // print("cities in CA: ${cities.join(", ")}");
       }});

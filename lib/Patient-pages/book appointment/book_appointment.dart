@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:ooadproject/Patient-pages/home_screen_patient.dart';
@@ -5,6 +7,16 @@ import 'package:ooadproject/Patient-pages/home_screen_patient.dart';
 const Color darkBlue = Color.fromARGB(255, 18, 32, 47);
 
 class FlutterDatePickerExample extends StatelessWidget {
+  CollectionReference users = FirebaseFirestore.instance.collection('Doctor');
+  var u2;
+
+  String convertDate(DateTime dateTime) {
+    return DateFormat('dd/MM/yyyy').format(dateTime);
+  }
+  FlutterDatePickerExample(String userid){
+    u2 = userid;
+  }
+  String ds="";
   final ValueNotifier<DateTime?> dateSub = ValueNotifier(null);
   final ValueNotifier<DateTime?> longDateSub = ValueNotifier(null);
   final ValueNotifier<TimeOfDay?> timeSub = ValueNotifier(null);
@@ -26,16 +38,39 @@ class FlutterDatePickerExample extends StatelessWidget {
               const SizedBox(
                 height: 20,
               ),
-              const Text(
-                "Dr Komal Gupta",
-                style: TextStyle(fontSize: 20),
+              Container(
+                child: FutureBuilder<DocumentSnapshot>(
+                  future: users
+                      .doc(u2)
+                      .get(),
+                  builder: (BuildContext context,
+                      AsyncSnapshot<DocumentSnapshot> snapshot) {
+                    if (snapshot.connectionState == ConnectionState.done) {
+                      Map<String, dynamic> data =
+                      snapshot.data!.data() as Map<String, dynamic>;
+                      return
+                        Text(
+                          data['Name'],
+                          style: TextStyle(
+                              fontSize: 20),
+
+                        );
+                    }
+
+                    return Text("loading");
+                  },
+                ),
               ),
               const SizedBox(
                 height: 30,
               ),
-              const TextField(
+              TextField(
+                onChanged: (value) {
+                  ds = value;
+                },
                 keyboardType: TextInputType.multiline,
                 maxLines: null,
+
                 decoration: InputDecoration(
                   border: UnderlineInputBorder(),
                   labelText: '    Enter description of the problem',
@@ -109,15 +144,29 @@ class FlutterDatePickerExample extends StatelessWidget {
       bottomNavigationBar: Material(
         color: Color.fromARGB(255, 71, 113, 253),
         child: InkWell(
-          onTap: () {
+          onTap: () async {
             if (longDateSub.value != null) {
               ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                 content: Text('Request sent'),
                 duration: Duration(seconds: 5),
               ));
 
+              List<Map<String,String>> map = [
+              {'Date': convertDate(longDateSub.value as DateTime),
+                'Time': convertTime(timeSub.value as TimeOfDay),
+                'Desc': ds,
+                'P-id': (FirebaseAuth.instance.currentUser?.uid).toString(),},
+              ];
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => const HomeScreen1()));
+              return await users
+                  .doc(u2)
+                  .update({
+                "Apt-req": FieldValue.arrayUnion(map),
+              })
+                  .then((value) => print("Profile updated"))
+                  .catchError(
+                      (error) => print("Failed to update: $error"));
             } else {
               ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                 content: Text('Fill all the details'),
@@ -142,9 +191,6 @@ class FlutterDatePickerExample extends StatelessWidget {
     );
   }
 
-  String convertDate(DateTime dateTime) {
-    return DateFormat('dd/MM/yyyy').format(dateTime);
-  }
 
   String longDate(DateTime dateTime) {
     return DateFormat('EEE, MMM d, yyy').format(dateTime);

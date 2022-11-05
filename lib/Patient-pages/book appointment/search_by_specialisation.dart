@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../doc_profile.dart';
+import 'Book_appointment_doc_profile.dart';
 
 class search_spec extends StatelessWidget {
   const search_spec({super.key});
@@ -100,7 +101,7 @@ class CustomSearchDelegate extends SearchDelegate {
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => const viewDocProfile()));
+                    builder: (context) => const viewDocProfileBook()));
           },
           leading: result.prfl,
           title:
@@ -130,7 +131,7 @@ class CustomSearchDelegate extends SearchDelegate {
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => const viewDocProfile()));
+                    builder: (context) => const viewDocProfileBook()));
           },
           leading: result.prfl,
           title:

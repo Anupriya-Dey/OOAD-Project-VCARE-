@@ -59,7 +59,7 @@ class _search_docState extends State<search_doc> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const search_name()));
+                            builder: (context) => search_name()));
                   },
                   style: OutlinedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(horizontal: 50),

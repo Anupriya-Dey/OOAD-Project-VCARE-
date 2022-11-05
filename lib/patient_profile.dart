@@ -94,7 +94,7 @@ class _viewPatientProfileState extends State<viewPatientProfile> {
                                 fontSize: 30),
                           ),
                           Text(
-                            data['Specialisation'],
+                            data['Gender'],
                             style: TextStyle(
                                 height: 2,
                                 color: Colors.grey[800],
@@ -104,7 +104,9 @@ class _viewPatientProfileState extends State<viewPatientProfile> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
-                              Text(data['ct']),
+                              Text(data['Age'].toString()+" years"),
+                              buildDivider(),
+                              Text(data['contact no'].toString()),
                               buildDivider(),
                               Text(data['Email']),
                             ],
