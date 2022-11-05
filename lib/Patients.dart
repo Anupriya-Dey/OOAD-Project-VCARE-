@@ -1,33 +1,27 @@
 import 'dart:ui';
-import 'package:firebase_core/firebase_core.dart';
-import 'firebase_options.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'medical%20history/patient_history.dart';
-import 'patient_profile.dart';
-
-
+//import 'package:ooadproject/doctor/medical%20folder/patient_history.dart';
+import 'main.dart';
+//import 'package:ooadproject/doctor/patient%20list/patient_profile.dart';
+//import 'package:ooadproject/patient/my_appointments.dart';
+import 'package:ooadproject/patient_profile.dart';
 
 class Patients extends StatefulWidget {
-  const Patients({super.key});
-
+  Patients({super.key, required this.doc});
+  Doctor doc;
 // patients
   // final _patientlist = MyPatient[];
   @override
   State<Patients> createState() => _PatientsState();
-
 }
 
 class _PatientsState extends State<Patients> {
-//   List<Mypatients> MyPatientList = [
-//     Mypatients.constructor2("anjalli", "23456"), //0
-//     Mypatients.constructor2("nomi", "234asdas"), //1
-//     Mypatients.constructor2("tru", "2sdsd6") //2
-//   ];
   @override
   Widget build(BuildContext context) {
+    Doctor doc = widget.doc;
     return Scaffold(
         appBar: AppBar(
           title: Text("My Patients"),
@@ -38,38 +32,30 @@ class _PatientsState extends State<Patients> {
             onPressed: () => Navigator.of(context).pop(),
           ),
         ),
-        body: StreamBuilder(
-          stream: FirebaseFirestore.instance.collection('Patient').snapshots(),
-          builder: (context, snapshot) {
-            if (!snapshot.hasData) return const Text('Loading...');
+        body: ListView.builder(
+          itemCount: (doc.MyAppointments.length) * 2,
+          itemBuilder: (context, i) {
+            if (i.isOdd) return const Divider();
 
-            return ListView.builder(
+            final j = i ~/ 2;
 
-              itemCount: (snapshot.data!.docs.length) * 2,
-              itemBuilder: (context, i) {
-                if (i.isOdd) return const Divider();
-
-                final j = i ~/ 2;
-
-                // if (index < MyPatientList.length) {
-                return ListTile(
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const viewPatientProfile()));
-                  },
-                  //leading: snapshot.data.docs[j], //profile image
-                  title: Text(
-                    snapshot.data!.docs[j]['Name'],
-                    style: TextStyle(color: Colors.black87),
-                  ),
-                  subtitle: Text(snapshot.data!.docs[j]['contact no'].toString()),
-                );
-                // }
+            // if (index < MyPatientList.length) {
+            return ListTile(
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => viewPatientProfile(patient: doc.MyAppointments[j].patient)));
               },
+              leading: doc.MyAppointments[j].patient.prfl,
+              title: Text(
+                doc.MyAppointments[j].patient.name,
+                style: TextStyle(color: Colors.black87),
+              ),
+              subtitle: Text(doc.MyAppointments[j].patient.phno),
             );
-          }
+            // }
+          },
         ));
   }
 }

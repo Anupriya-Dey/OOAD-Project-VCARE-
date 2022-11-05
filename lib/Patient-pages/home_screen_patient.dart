@@ -192,7 +192,7 @@ class _HomeScreen1State extends State<HomeScreen1> {
                               context,
                               MaterialPageRoute(
                                   builder: (context) =>
-                                      const viewPatientProfile()),
+                                       viewPatientProfile()),
                             ),
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 4),

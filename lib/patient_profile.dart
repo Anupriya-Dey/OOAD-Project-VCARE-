@@ -1,11 +1,11 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'medical%20history/patient_history.dart';
+// import 'package:ooadproject/doctor/medical%20folder/patient_history.dart';
+import 'Patient-pages/medical folder/patient_history.dart';
+import 'main.dart';
 
 class viewPatientProfile extends StatefulWidget {
-  const viewPatientProfile({Key? key}) : super(key: key);
-
+  viewPatientProfile({Key? key, required this.patient}) : super(key: key);
+  Patient patient;
   @override
   State<viewPatientProfile> createState() => _viewPatientProfileState();
 }
@@ -14,11 +14,11 @@ class viewPatientProfile extends StatefulWidget {
 class _viewPatientProfileState extends State<viewPatientProfile> {
   @override
   Widget build(BuildContext context) {
-    CollectionReference users = FirebaseFirestore.instance.collection('Patient');
+    Patient patient = widget.patient;
     Widget buildDivider() => Container(
-          height: 24,
-          child: VerticalDivider(),
-        );
+      height: 24,
+      child: VerticalDivider(),
+    );
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.blue,
@@ -40,7 +40,7 @@ class _viewPatientProfileState extends State<viewPatientProfile> {
         ),
         body: Container(
           padding:
-              const EdgeInsets.only(left: 16, top: 25, right: 16, bottom: 12),
+          const EdgeInsets.only(left: 16, top: 25, right: 16, bottom: 12),
           // child: Align(
           //   alignment: Alignment.topCenter,
           child: Column(
@@ -70,58 +70,25 @@ class _viewPatientProfileState extends State<viewPatientProfile> {
                         image: NetworkImage(
                             "https://www.kindpng.com/picc/m/451-4517876_default-profile-hd-png-download.png"))),
               ),
-              Container(
-                child: FutureBuilder<DocumentSnapshot>(
-                  future: users
-                      .doc(FirebaseAuth.instance.currentUser?.uid)
-                      .get(),
-                  builder: (BuildContext context,
-                      AsyncSnapshot<DocumentSnapshot> snapshot) {
-                    if (snapshot.connectionState == ConnectionState.done) {
-                      Map<String, dynamic> data =
-                      snapshot.data!.data() as Map<String, dynamic>;
-                      return Column(
-                        children: [
-                          const SizedBox(
-                            height: 15,
-                          ),
-                          Text(
-                            data['Name'],
-                            style: TextStyle(
-                                height: 2,
-                                color: Colors.grey[800],
-                                fontWeight: FontWeight.bold,
-                                fontSize: 30),
-                          ),
-                          Text(
-                            data['Gender'],
-                            style: TextStyle(
-                                height: 2,
-                                color: Colors.grey[800],
-                                fontWeight: FontWeight.bold,
-                                fontSize: 25),
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Text(data['Age'].toString()+" years"),
-                              buildDivider(),
-                              Text(data['contact no'].toString()),
-                              buildDivider(),
-                              Text(data['Email']),
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 50,
-                          ),
-                        ],
-                      );
-                    }
 
-                    return Text("loading");
-                  },
-                ),
+              Text(
+                patient.name,
+                style: TextStyle(
+                    height: 2,
+                    color: Colors.grey[800],
+                    fontWeight: FontWeight.bold,
+                    fontSize: 30),
               ),
+
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(patient.phno),
+                  buildDivider(),
+                  Text(patient.email),
+                ],
+              ),
+
               const SizedBox(
                 height: 100,
               ),
@@ -142,7 +109,7 @@ class _viewPatientProfileState extends State<viewPatientProfile> {
                   child: Text('Medical Folder',
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                          // height: 2,
+                        // height: 2,
                           fontSize: 25,
                           letterSpacing: 1,
                           fontWeight: FontWeight.bold,

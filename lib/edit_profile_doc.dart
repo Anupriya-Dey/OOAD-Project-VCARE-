@@ -5,27 +5,28 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:ooadproject/home_screen.dart';
+import 'main.dart';
 // import 'package:ooadproject/home_screen.dart';
 
 // ignore: camel_case_types
 class edit_profile_doc extends StatelessWidget {
-  const edit_profile_doc({super.key});
-
+  edit_profile_doc({super.key, required this.doc});
+  Doctor doc;
   // const SettingsUI({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: "Setting UI",
-      home: EditProfilePage(),
+      home: EditProfilePage(doc: doc),
     );
   }
 }
 
 class EditProfilePage extends StatefulWidget {
-  const EditProfilePage({super.key});
-
+  EditProfilePage({super.key, required this.doc});
+  Doctor doc;
   // const EditProfilePage({Key key}) : super(key: key);
 
   @override
@@ -53,6 +54,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
   double ct = 0;
   @override
   Widget build(BuildContext context) {
+    Doctor doc = widget.doc;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blue,
@@ -105,7 +107,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                           shape: BoxShape.circle,
                           image: const DecorationImage(
                               fit: BoxFit.fill,
-                              image: AssetImage("imgdefault.png"))),
+                              image: AssetImage('assets/images/imgdefault.png'))),
                     ),
                     Positioned(
                         bottom: 0,
@@ -234,7 +236,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const HomeScreen()),
+                            builder: (context) => HomeScreen(doc: doc,)),
                       );
                     },
                     style: ElevatedButton.styleFrom(
@@ -253,7 +255,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const HomeScreen()),
+                            builder: (context) => HomeScreen(doc: doc,)),
                       );
                       //addUser();
                       // Call the user's CollectionReference to add a new user

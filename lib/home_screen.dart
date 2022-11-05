@@ -5,14 +5,17 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:ooadproject/requests.dart';
+import 'package:ooadproject/schedule.dart';
+import 'requests.dart';
 import 'Patients.dart';
 import 'doc_profile.dart';
+import 'main.dart';
 import 'medical%20history/patient_history.dart';
 import 'edit_profile_doc.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  HomeScreen({super.key, required this.doc});
+  Doctor doc;
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -21,6 +24,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
+    Doctor doc = widget.doc;
     // var size = MediaQuery.of(context).size;
     CollectionReference users = FirebaseFirestore.instance.collection('Doctor');
 
@@ -50,8 +54,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     children: <Widget>[
                       const CircleAvatar(
                         radius: 32,
-                        backgroundImage: NetworkImage(
-                            'https://images.unsplash.com/photo-1616002411355-49593fd89721?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8cGFzc3BvcnQlMjBwaG90b3xlbnwwfHwwfHw%3D&w=1000&q=80https://images.unsplash.com/photo-1616002411355-49593fd89721?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8cGFzc3BvcnQlMjBwaG90b3xlbnwwfHwwfHw%3D&w=1000&q=80'),
+                        backgroundImage: AssetImage('assets/images/imgdefault.png'),
+
                       ),
                       const SizedBox(
                         width: 16,
@@ -94,162 +98,167 @@ class _HomeScreenState extends State<HomeScreen> {
                     primary: false,
                     crossAxisCount: 2,
                     children: <Widget>[
-                  Card(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8)),
-                    elevation: 4,
-                    child: InkWell(
-                        onTap: () => Navigator.push(
+                      Card(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8)),
+                        elevation: 4,
+                        child: InkWell(
+                            onTap: () => Navigator.push(
                               context,
                               MaterialPageRoute(
                                   builder: (context) =>
-                                      const viewDocProfile()),
+                                  edit_profile_doc(doc: doc)),
                             ),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 40),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Expanded(
-                                child: Image.asset(
-                                  'assets/images/imgdoctor.png',
-                                  // height: 100.0,
-                                  fit: BoxFit.cover,
-                                ),
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 40),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  Expanded(
+                                    child: Image.asset(
+                                      'assets/images/imgdoctor.png',
+                                      // height: 100.0,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+
+                                  // Expanded(
+                                  Text(
+                                    'Profile',
+                                    style: cardTextStyle,
+                                    textAlign: TextAlign.center,
+                                    // overflow: TextOverflow.ellipsis,
+                                  )
+                                  // )
+                                ],
                               ),
+                            )),
+                        // child: Expanded(
 
-                              // Expanded(
-                              Text(
-                                'Profile',
-                                style: cardTextStyle,
-                                textAlign: TextAlign.center,
-                                // overflow: TextOverflow.ellipsis,
-                              )
-                              // )
-                            ],
-                          ),
-                        )),
-                    // child: Expanded(
-
-                    // )
-                  ),
-                  Card(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8)),
-                      elevation: 4,
-                      // child: Expanded(
-                      child: InkWell(
-                          onTap: () => Navigator.push(
+                        // )
+                      ),
+                      Card(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8)),
+                          elevation: 4,
+                          // child: Expanded(
+                          child: InkWell(
+                              onTap: () => Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => Patients()),
+                                    builder: (context) => Patients(doc: doc)),
                               ),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 5),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                Expanded(
-                                  child: Image.asset(
-                                    'assets/images/imgpatients.jpg',
-                                    // height: 100.0,
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 5),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: <Widget>[
+                                    Expanded(
+                                      child: Image.asset(
+                                        'assets/images/imgpatients.jpg',
+                                        // height: 100.0,
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
 
-                                // Expanded(
-                                //     child: Padding(
-                                //         padding:
-                                //             EdgeInsets.fromLTRB(10, 10, 10, 10),
-                                Text(
-                                  'Patients',
-                                  style: cardTextStyle,
-                                  textAlign: TextAlign.center,
-                                  // overflow: TextOverflow.ellipsis,
-                                )
-                                // ))
-                              ],
-                            ),
-                          ))
-                      // )
-                      ),
-                  Card(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8)),
-                      elevation: 4,
-                      // child: Expanded(
-                      child: InkWell(
-                        // onTap: () => Navigator.push(
-                        //   context,
-                        //   MaterialPageRoute(
-                        //       builder: (context) => CalendarAppointment()),//IMPORT SCHEDULE.DART
-                        // ),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 10),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Expanded(
-                                child: Image.asset(
-                                  'assets/images/imgcalender.jpg',
-                                  // height: 100.0,
-                                  fit: BoxFit.cover,
+                                    // Expanded(
+                                    //     child: Padding(
+                                    //         padding:
+                                    //             EdgeInsets.fromLTRB(10, 10, 10, 10),
+                                    Text(
+                                      'Patients',
+                                      style: cardTextStyle,
+                                      textAlign: TextAlign.center,
+                                      // overflow: TextOverflow.ellipsis,
+                                    )
+                                    // ))
+                                  ],
                                 ),
-                              ),
-                              // Expanded(
-                              // child: Padding(
-                              //     padding:
-                              //         EdgeInsets.fromLTRB(10, 10, 10, 10),
-                              Text(
-                                'Appointments',
-                                style: cardTextStyle,
-                                textAlign: TextAlign.center,
-                                // overflow: TextOverflow.ellipsis,
-                              )
-                              // )
-                              // )
-                            ],
-                          ),
-                        ),
-                      )
-                      // )
+                              ))
+                        // )
                       ),
-                  Card(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8)),
-                      elevation: 4,
-                      // child: Expanded(
-                      child: InkWell(
-                          onTap: () => Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => MyRequests()),
-                            ),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 20),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Expanded(
-                                child: Image.asset(
-                                  'assets/images/imgrequests.png',
-                                  // height: 100.0,
-                                  fit: BoxFit.cover,
+                      Card(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8)),
+                          elevation: 4,
+                          // child: Expanded(
+                          child: InkWell(
+                              onTap: () => Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        AppointmentWithoutWeekends(doc: doc)),
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 5),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: <Widget>[
+                                    Expanded(
+                                      child: Image.asset(
+                                        'assets/images/imgcalender.jpg',
+                                        // height: 100.0,
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+
+                                    // Expanded(
+                                    //     child: Padding(
+                                    //         padding:
+                                    //             EdgeInsets.fromLTRB(10, 10, 10, 10),
+                                    Text(
+                                      'Appointments',
+                                      style: cardTextStyle,
+                                      textAlign: TextAlign.center,
+                                      // overflow: TextOverflow.ellipsis,
+                                    )
+                                    // ))
+                                  ],
                                 ),
-                              ),
-                              Text(
-                                'Requests',
-                                style: cardTextStyle,
-                                textAlign: TextAlign.center,
-                                // overflow: TextOverflow.ellipsis,
-                              )
-                            ],
-                          ),
-                        ),
-                      )
-                      // )
+                              ))
+                        // )
                       ),
-                ]))
+                      Card(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8)),
+                          elevation: 4,
+                          // child: Expanded(
+                          child: InkWell(
+                              onTap: () => Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => MyRequests(doc: doc)),
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 5),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: <Widget>[
+                                    Expanded(
+                                      child: Image.asset(
+                                        'assets/images/imgrequests.png',
+                                        // height: 100.0,
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+
+                                    // Expanded(
+                                    //     child: Padding(
+                                    //         padding:
+                                    //             EdgeInsets.fromLTRB(10, 10, 10, 10),
+                                    Text(
+                                      'Requests',
+                                      style: cardTextStyle,
+                                      textAlign: TextAlign.center,
+                                      // overflow: TextOverflow.ellipsis,
+                                    )
+                                    // ))
+                                  ],
+                                ),
+                              ))
+                        // )
+                      ),
+                    ]))
           ],
         ),
       ))
