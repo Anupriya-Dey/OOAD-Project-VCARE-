@@ -6,7 +6,7 @@ import 'package:flutter/widgets.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 import 'package:flutter/src/widgets/framework.dart';
 //import 'package:ooadproject/doctor/patient%20list/patient_profile.dart';
-import 'main.dart';
+import '../main.dart';
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 

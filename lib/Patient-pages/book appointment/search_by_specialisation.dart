@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../../doc_profile.dart';
+import '../../Doctor-pages/doc_profile.dart';
 import 'Book_appointment_doc_profile.dart';
 
 class search_spec extends StatelessWidget {

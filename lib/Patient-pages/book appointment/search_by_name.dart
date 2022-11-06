@@ -6,7 +6,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ooadproject/Patient-pages/book%20appointment/Book_appointment_doc_profile.dart';
 
-import '../../doc_profile.dart';
+import 'Doc-profilePat.dart';
+import '../../Doctor-pages/doc_profile.dart';
 
 class search_name extends StatelessWidget {
   const search_name({super.key});
@@ -150,12 +151,12 @@ class CustomSearchDelegate extends SearchDelegate {
       itemBuilder: (context, index) {
         var result = matchQuery[index];
         return ListTile(
-          onTap: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => const viewDocProfile()));
-          },
+          // onTap: () {
+          //   Navigator.push(
+          //       context,
+          //       MaterialPageRoute(
+          //           builder: (context) => DocProfile(doc: doc)));
+          // },
           // leading: result.prfl,
           title:
           Text(result, style: const TextStyle(color: Colors.black87)),

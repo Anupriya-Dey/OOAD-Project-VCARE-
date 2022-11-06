@@ -5,9 +5,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:ooadproject/patient_profile.dart';
+import 'package:ooadproject/Doctor-pages/Pat-list/patient_profile.dart';
 
-import '../medical history/patient_history.dart';
+import '/Patient-pages/medical folder/patient_history.dart';
+import 'Pat-prof.dart';
 import 'book appointment/search_dr_tab.dart';
 import 'my_appointments.dart';
 
@@ -47,8 +48,7 @@ class _HomeScreen1State extends State<HomeScreen1> {
                     children: <Widget>[
                       const CircleAvatar(
                         radius: 32,
-                        backgroundImage: NetworkImage(
-                            'https://images.unsplash.com/photo-1616002411355-49593fd89721?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8cGFzc3BvcnQlMjBwaG90b3xlbnwwfHwwfHw%3D&w=1000&q=80https://images.unsplash.com/photo-1616002411355-49593fd89721?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8cGFzc3BvcnQlMjBwaG90b3xlbnwwfHwwfHw%3D&w=1000&q=80'),
+                        backgroundImage: AssetImage("assets/images/imgdefault.png"),
                       ),
                       const SizedBox(
                         width: 16,
@@ -130,7 +130,7 @@ class _HomeScreen1State extends State<HomeScreen1> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
-                                        const patient_history()),
+                                        const patient_history1()),
                               ),
                           child: Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 5),
@@ -192,7 +192,7 @@ class _HomeScreen1State extends State<HomeScreen1> {
                               context,
                               MaterialPageRoute(
                                   builder: (context) =>
-                                       viewPatientProfile()),
+                                      viewPatProf ()),
                             ),
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 4),

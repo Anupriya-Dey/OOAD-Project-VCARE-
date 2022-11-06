@@ -5,12 +5,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:ooadproject/schedule.dart';
+import 'package:ooadproject/Doctor-pages/schedule.dart';
 import 'requests.dart';
-import 'Patients.dart';
+import 'Pat-list/Patients.dart';
 import 'doc_profile.dart';
-import 'main.dart';
-import 'medical%20history/patient_history.dart';
+import '../main.dart';
+//import 'lib/medical folder/patient_history.dart';
 import 'edit_profile_doc.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -107,7 +107,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               context,
                               MaterialPageRoute(
                                   builder: (context) =>
-                                  edit_profile_doc(doc: doc)),
+                                      viewDocProfile(doc: doc,)),
                             ),
                             child: Padding(
                               padding: const EdgeInsets.symmetric(horizontal: 40),

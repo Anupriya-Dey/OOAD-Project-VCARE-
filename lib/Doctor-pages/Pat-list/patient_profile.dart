@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:ooadproject/Patient-pages/medical%20folder/patient_history.dart';
 // import 'package:ooadproject/doctor/medical%20folder/patient_history.dart';
-import 'Patient-pages/medical folder/patient_history.dart';
-import 'main.dart';
+import '../../main.dart';
+import '../medFolderDoc/patient_history (1).dart';
 
 class viewPatientProfile extends StatefulWidget {
   viewPatientProfile({Key? key, required this.patient}) : super(key: key);
@@ -98,7 +99,7 @@ class _viewPatientProfileState extends State<viewPatientProfile> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const patient_history()));
+                          builder: (context) => patient_history(patient: patient,)));
                 },
                 style: OutlinedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(horizontal: 50),

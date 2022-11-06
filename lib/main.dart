@@ -5,9 +5,9 @@ import 'package:firebase_core/firebase_core.dart';
 
 import 'Patient-pages/edit_patient.dart';
 import 'Patient-pages/home_screen_patient.dart';
-import 'edit_profile_doc.dart';
+import 'Doctor-pages/edit_profile_doc.dart';
 import 'firebase_options.dart';
-import 'home_screen.dart';
+import 'Doctor-pages/home_screen.dart';
 import 'signup.dart';
 import 'package:intl/intl.dart';
 
@@ -29,20 +29,29 @@ class Patient {
   String name;
   String phno;
   String email;
+  List<String> presriptions = <String>[];
   Image prfl = Image.asset("assets/images/imgdefault.png");
+
   Patient.constructor1(this.name, this.phno, this.email, this.prfl);
+
   Patient.constructor2(this.name, this.phno, this.email);
+
+  void addPrescription(String s) {
+    presriptions.add(s);
+  }
 }
 
 class Doctor {
   String name;
   String phno;
+  String email;
+  String educDet;
   String Specialisation;
   Image prfl = Image.asset("assets/images/imgdefault.png");
   List<appointmentDetails> requestlist = <appointmentDetails>[];
   List<appointmentDetails> MyAppointments = <appointmentDetails>[];
-  Doctor.constructor1(this.name, this.phno, this.Specialisation, this.prfl);
-  Doctor.constructor2(this.name, this.phno, this.Specialisation);
+  Doctor.constructor1(this.name, this.phno, this.Specialisation, this.prfl,this.email,this.educDet);
+  Doctor.constructor2(this.name, this.phno, this.Specialisation,this.email,this.educDet);
 
   void addrequest(appointmentDetails req) {
     requestlist.add(req);
@@ -102,7 +111,7 @@ class _MyHomePageState extends State<MyHomePage> {
   int _success = 1;
   String _userEmail = "";
 
-  Doctor doc = Doctor.constructor2("Komal Gupta", "8765433456", "Pychiatrist");
+  Doctor doc = Doctor.constructor2("Komal Gupta", "8765433456", "Pychiatrist","kgupta@gmail.com","MBBS, AIIMS Rishikesh");
   DateFormat dateDisplay = DateFormat("MMMM dd, yyyy");
   DateFormat timeDisplay = DateFormat("hh : mm  a");
   @override

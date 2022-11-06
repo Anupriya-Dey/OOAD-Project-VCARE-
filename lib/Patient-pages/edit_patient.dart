@@ -90,7 +90,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                           shape: BoxShape.circle,
                           image: const DecorationImage(
                               fit: BoxFit.fill,
-                              image: AssetImage("imgdefault.png"))),
+                              image: AssetImage("assets/images/imgdefault.png"))),
                     ),
                     Positioned(
                         bottom: 0,

@@ -3,19 +3,22 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'prescription.dart';
+import 'package:ooadproject/main.dart';
+import '../medFolderDoc/prescription (1).dart';
 
 // ignore: camel_case_types
-class patient_history1 extends StatefulWidget {
-  const patient_history1({super.key});
+class patient_history extends StatefulWidget {
+  patient_history({super.key, required this.patient});
+  Patient patient;
   @override
-  State<patient_history1> createState() => _patient_history1State();
+  State<patient_history> createState() => _patient_historyState();
 }
 
 // ignore: camel_case_types
-class _patient_history1State extends State<patient_history1> {
+class _patient_historyState extends State<patient_history> {
   @override
   Widget build(BuildContext context) {
+    Patient patient = widget.patient;
     return DefaultTabController(
         length: 2,
         child: Scaffold(
@@ -29,7 +32,7 @@ class _patient_history1State extends State<patient_history1> {
             title: const Text('Medical Folder'),
           ),
           body: TabBarView(children: [
-            prescription(),
+            prescription(patient: patient),
             Container(),
           ]),
         ));

@@ -4,7 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'edit_profile_doc.dart';
+import 'Doctor-pages/edit_profile_doc.dart';
 import 'main.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
