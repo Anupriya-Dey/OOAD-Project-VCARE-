@@ -2,27 +2,32 @@ import 'dart:ui';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
+import 'package:ooadproject/welcome.dart';
+import 'package:ooadproject/welcome.dart';
 import 'home_screen_patient.dart';
 // import 'package:ooadproject/home_screen.dart';
 
 // ignore: camel_case_types
 class edit_patient extends StatelessWidget {
-  const edit_patient({super.key});
+  edit_patient({super.key, required this.doc, required this.patient});
+  Doctor doc;
+  Patient patient;
 
   // const SettingsUI({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: "Setting UI",
-      home: EditProfilePage(),
+      home: EditProfilePage(doc: doc,patient: patient),
     );
   }
 }
 class EditProfilePage extends StatefulWidget {
-  const EditProfilePage({super.key});
+  EditProfilePage({super.key, required this.doc, required this.patient});
+  Doctor doc;
+  Patient patient;
 
   // const EditProfilePage({Key key}) : super(key: key);
 
@@ -38,22 +43,24 @@ class _EditProfilePageState extends State<EditProfilePage> {
   double ct = 0,em=0;
   @override
   Widget build(BuildContext context) {
+    Doctor doc = widget.doc;
+    Patient patient = widget.patient;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blue,
         title: const Text("My Profile"),
         // Theme.of(context).scaffoldBackgroundColor,
         elevation: 3,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back,
-              color: Color.fromARGB(255, 255, 255, 255)),
-          onPressed: () => Navigator.of(
-            context,
-            rootNavigator: true,
-          ).pop(
-            context,
-          ),
-        ),
+        // leading: IconButton(
+        //   icon: const Icon(Icons.arrow_back,
+        //       color: Color.fromARGB(255, 255, 255, 255)),
+        //   onPressed: () => Navigator.of(
+        //     context,
+        //     rootNavigator: true,
+        //   ).pop(
+        //     context,
+        //   ),
+        // ),
       ),
       body: Container(
         padding: const EdgeInsets.only(left: 16, top: 25, right: 16),
@@ -198,10 +205,11 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 children: [
                   ElevatedButton(
                     onPressed: () async {
-                      Navigator.push(
+                      Navigator.of(
                         context,
-                        MaterialPageRoute(
-                            builder: (context) => const HomeScreen1()),
+                        rootNavigator: true,
+                      ).pop(
+                        context,
                       );
                     },
                     style: ElevatedButton.styleFrom(
@@ -220,7 +228,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const HomeScreen1()),
+                            builder: (context) => HomeScreen_patient(doc: doc, patient: patient)),
                       );
                       //addUser();
                       // Call the user's CollectionReference to add a new user

@@ -1,30 +1,29 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:ooadproject/welcome.dart';
+import 'edit_pat_dash.dart';
 
-import 'book_appointment.dart';
-// import 'package:ooadproject/patient/book%20appointment/book_appointment.dart';
-
-// import 'package:ooadproject/doctor/medical%20folder/patient_history.dart';
-
-// ignore: camel_case_types
-class viewDocProfileBook extends StatefulWidget {
-  const viewDocProfileBook({Key? key}) : super(key: key);
-
+class viewPatProf extends StatefulWidget {
+  viewPatProf({super.key, required this.doc, required this.patient});
+  Doctor doc;
+  Patient patient;
   @override
-  State<viewDocProfileBook> createState() => _viewDocProfileBookState();
+  State<viewPatProf> createState() => _viewPatProfState();
 }
 
 // ignore: camel_case_types
-class _viewDocProfileBookState extends State<viewDocProfileBook> {
+class _viewPatProfState extends State<viewPatProf> {
   @override
   Widget build(BuildContext context) {
-    CollectionReference users = FirebaseFirestore.instance.collection('Doctor');
-    var uid = 'hlQfCQEIuZeyHzJ8ai3U0MlztH13';
+    CollectionReference users =
+        FirebaseFirestore.instance.collection('Patient');
+    Doctor doc = widget.doc;
+    Patient patient = widget.patient;
     Widget buildDivider() => Container(
-      height: 24,
-      child: VerticalDivider(),
-    );
+          height: 24,
+          child: VerticalDivider(),
+        );
 
     return Scaffold(
         appBar: AppBar(
@@ -32,22 +31,10 @@ class _viewDocProfileBookState extends State<viewDocProfileBook> {
           title: const Text("Profile"),
           // Theme.of(context).scaffoldBackgroundColor,
           elevation: 3,
-          leading: IconButton(
-            icon: const Icon(
-              Icons.arrow_back,
-              color: Colors.white,
-            ),
-            onPressed: () => Navigator.of(
-              context,
-              rootNavigator: true,
-            ).pop(
-              context,
-            ),
-          ),
         ),
         body: Container(
             padding:
-            const EdgeInsets.only(left: 16, top: 25, right: 16, bottom: 12),
+                const EdgeInsets.only(left: 16, top: 25, right: 16, bottom: 12),
             // child: Align(
             //   alignment: Alignment.topCenter,
             child: Column(children: [
@@ -75,8 +62,9 @@ class _viewDocProfileBookState extends State<viewDocProfileBook> {
                         shape: BoxShape.circle,
                         image: const DecorationImage(
                             fit: BoxFit.cover,
-                            image: NetworkImage(
-                                "https://www.kindpng.com/picc/m/451-4517876_default-profile-hd-png-download.png"))),
+                            image: AssetImage(
+                              'assets/images/imgdefault.png',
+                            ))),
                   ),
                   const SizedBox(
                     height: 15,
@@ -84,13 +72,13 @@ class _viewDocProfileBookState extends State<viewDocProfileBook> {
                   Container(
                     child: FutureBuilder<DocumentSnapshot>(
                       future: users
-                          .doc(uid)
+                          .doc(FirebaseAuth.instance.currentUser?.uid)
                           .get(),
                       builder: (BuildContext context,
                           AsyncSnapshot<DocumentSnapshot> snapshot) {
                         if (snapshot.connectionState == ConnectionState.done) {
                           Map<String, dynamic> data =
-                          snapshot.data!.data() as Map<String, dynamic>;
+                              snapshot.data!.data() as Map<String, dynamic>;
                           return Column(
                             children: [
                               const SizedBox(
@@ -104,20 +92,20 @@ class _viewDocProfileBookState extends State<viewDocProfileBook> {
                                     fontWeight: FontWeight.bold,
                                     fontSize: 30),
                               ),
-                              Text(
-                                data['Specialisation'],
-                                style: TextStyle(
-                                    height: 2,
-                                    color: Colors.grey[800],
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 25),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  Text(data['Age'].toString()),
+                                  buildDivider(),
+                                  Text(data['Email']),
+                                ],
                               ),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: <Widget>[
                                   Text(data['contact no'].toString()),
                                   buildDivider(),
-                                  Text(data['Email']),
+                                  Text(data['Gender']),
                                 ],
                               ),
                               const SizedBox(
@@ -136,19 +124,21 @@ class _viewDocProfileBookState extends State<viewDocProfileBook> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) =>
-                                  FlutterDatePickerExample(uid)));
+                              builder: (context) => edit_pat_dash(
+                                    doc: doc,
+                                    patient: patient,
+                                  )));
                     },
                     style: OutlinedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(horizontal: 50),
-                      backgroundColor: Color.fromARGB(77, 94, 98, 99),
+                      backgroundColor: Colors.green,
                     ),
                     child: const Padding(
                       padding: EdgeInsets.all(15),
-                      child: Text('Book Appointment',
+                      child: Text('Edit Profile',
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                            // height: 2,
+                              // height: 2,
                               fontSize: 17,
                               letterSpacing: 1,
                               fontWeight: FontWeight.bold,
@@ -161,49 +151,6 @@ class _viewDocProfileBookState extends State<viewDocProfileBook> {
                   // buildTextField("Educational Details"),
                 ],
               ),
-              Container(
-                child: FutureBuilder<DocumentSnapshot>(
-                  future: users
-                      .doc(uid)
-                      .get(),
-                  builder: (BuildContext context,
-                      AsyncSnapshot<DocumentSnapshot> snapshot) {
-                    if (snapshot.connectionState == ConnectionState.done) {
-                      Map<String, dynamic> data =
-                      snapshot.data!.data() as Map<String, dynamic>;
-                      return Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Padding(
-                              padding: const EdgeInsets.only(right: 120.0),
-                              child: Text('Educational Details',
-                                  style: TextStyle(
-                                      height: 2,
-                                      color: Colors.grey[800],
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 18),
-                                  textAlign: TextAlign.left)),
-                          Padding(
-                              padding: const EdgeInsets.only(right: 100.0),
-                              child: Text(
-                                data['Educational Details'],
-                                textAlign: TextAlign.start,
-                                style: TextStyle(
-                                    height: 2,
-                                    color: Colors.grey[800],
-                                    // fontWeight: FontWeight.bold,
-                                    fontSize: 15),
-                              )),
-                        ],
-                      );
-                    }
-
-                    return Text("loading");
-                  },
-                ),
-              ),
-
             ])));
   }
 }

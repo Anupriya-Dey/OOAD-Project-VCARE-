@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import '../main.dart';
+import '../welcome.dart';
 
 class MyRequests extends StatefulWidget {
   MyRequests({Key? key, required this.doc}) : super(key: key);
@@ -39,6 +39,7 @@ class _MyRequestsState extends State<MyRequests> {
                       child: ElevatedButton(
                         onPressed: () {
                           setState(() {
+                            doc.requestlist[i].setStatus(1);
                             doc.acceptRequest(doc.requestlist[i]);
                           });
                         },
@@ -54,6 +55,7 @@ class _MyRequestsState extends State<MyRequests> {
                       child: ElevatedButton(
                         onPressed: () {
                           setState(() {
+                            doc.requestlist[i].setStatus(3);
                             doc.declineRequest(doc.requestlist[i]);
                           });
                         },

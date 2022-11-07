@@ -4,8 +4,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:ooadproject/Doctor-pages/home_screen.dart';
+import '../doctor/home_screen_doc.dart';
 import '../main.dart';
+import '../welcome.dart';
 // import 'package:ooadproject/home_screen.dart';
 
 // ignore: camel_case_types
@@ -50,7 +51,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
   // }
 
 
-  String sp = "", nm = "", em = "",educ="";
+  String sp = "", nm = "",educ="";
   double ct = 0;
   @override
   Widget build(BuildContext context) {
@@ -155,24 +156,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
               Padding(
                 padding: const EdgeInsets.only(bottom: 35.0),
                 child: TextField(
-                  onChanged: (value) {
-                    em = value;
-                  },
-                  decoration: InputDecoration(
-                      contentPadding: const EdgeInsets.only(bottom: 3),
-                      labelText: "Address",
-                      floatingLabelBehavior: FloatingLabelBehavior.always,
-                      // hintText: placeholder,
-                      labelStyle: const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                      )),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 35.0),
-                child: TextField(
                   decoration: InputDecoration(
                       contentPadding: const EdgeInsets.only(bottom: 3),
                       labelText: "Contact Number",
@@ -233,10 +216,11 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 children: [
                   ElevatedButton(
                     onPressed: () async {
-                      Navigator.push(
+                      Navigator.of(
                         context,
-                        MaterialPageRoute(
-                            builder: (context) => HomeScreen(doc: doc,)),
+                        rootNavigator: true,
+                      ).pop(
+                        context,
                       );
                     },
                     style: ElevatedButton.styleFrom(
@@ -255,7 +239,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => HomeScreen(doc: doc,)),
+                            builder: (context) => HomeScreen_doc(doc: doc,)),
                       );
                       //addUser();
                       // Call the user's CollectionReference to add a new user
@@ -265,7 +249,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
                             "Name": nm,
                             "Specialisation": sp,
                             "contact no": ct,
-                            "Address": em,
                             "Educational Details": educ,
                           })
                           .then((value) => print("Profile updated"))

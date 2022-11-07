@@ -3,13 +3,17 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'Login-page.dart';
+import 'welcome.dart';
+//import 'Doctor-pages/edit_profile_doc.dart';
 
-import 'Doctor-pages/edit_profile_doc.dart';
-import 'main.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
 
 class SignupPage extends StatefulWidget {
+  SignupPage({Key? key, required this.patient, required this.doc}) : super(key: key);
+  Doctor doc;
+  Patient patient;
   @override
   _SignupPageState createState() => _SignupPageState();
 }
@@ -22,10 +26,12 @@ class _SignupPageState extends State<SignupPage> {
 
   @override
   Widget build(BuildContext context) {
+    Patient patient = widget.patient;
+    Doctor doc = widget.doc;
     void goToLogin() {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => const MyHomePage(title: 'Login page',)),
+        MaterialPageRoute(builder: (context) => MyHomePage(title: 'Login page',doc: doc,patient: patient)),
       );
     }
 

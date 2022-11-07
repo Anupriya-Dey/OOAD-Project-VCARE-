@@ -3,11 +3,10 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-//import 'package:ooadproject/doctor/medical%20folder/patient_history.dart';
-import '../../main.dart';
-//import 'package:ooadproject/doctor/patient%20list/patient_profile.dart';
-//import 'package:ooadproject/patient/my_appointments.dart';
-import 'package:ooadproject/Doctor-pages/Pat-list/patient_profile.dart';
+import 'package:ooadproject/doctor/medical%20folder/patient_history.dart';
+import 'package:ooadproject/welcome.dart';
+import 'package:ooadproject/doctor/patient%20list/patient_profile.dart';
+import 'package:ooadproject/patient/my_appointments.dart';
 
 class Patients extends StatefulWidget {
   Patients({super.key, required this.doc});
@@ -45,7 +44,7 @@ class _PatientsState extends State<Patients> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => viewPatientProfile(patient: doc.MyAppointments[j].patient)));
+                        builder: (context) => viewPatientProfile(patient: doc.MyAppointments[j].patient,doc: doc,)));
               },
               leading: doc.MyAppointments[j].patient.prfl,
               title: Text(

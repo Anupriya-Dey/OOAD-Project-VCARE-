@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:ooadproject/Patient-pages/medical%20folder/patient_history.dart';
-// import 'package:ooadproject/doctor/medical%20folder/patient_history.dart';
-import '../../main.dart';
-import '../medFolderDoc/patient_history (1).dart';
+import 'package:ooadproject/doctor/medical%20folder/patient_history.dart';
+import 'package:ooadproject/welcome.dart';
 
 class viewPatientProfile extends StatefulWidget {
-  viewPatientProfile({Key? key, required this.patient}) : super(key: key);
+  viewPatientProfile({Key? key, required this.patient, required this.doc})
+      : super(key: key);
   Patient patient;
+  Doctor doc;
   @override
   State<viewPatientProfile> createState() => _viewPatientProfileState();
 }
@@ -16,32 +16,33 @@ class _viewPatientProfileState extends State<viewPatientProfile> {
   @override
   Widget build(BuildContext context) {
     Patient patient = widget.patient;
+    Doctor doc = widget.doc;
     Widget buildDivider() => Container(
-      height: 24,
-      child: VerticalDivider(),
-    );
+          height: 24,
+          child: VerticalDivider(),
+        );
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.blue,
           title: const Text("Profile"),
           // Theme.of(context).scaffoldBackgroundColor,
           elevation: 3,
-          leading: IconButton(
-            icon: const Icon(
-              Icons.arrow_back,
-              color: Colors.white,
-            ),
-            onPressed: () => Navigator.of(
-              context,
-              rootNavigator: true,
-            ).pop(
-              context,
-            ),
-          ),
+          // leading: IconButton(
+          //   icon: const Icon(
+          //     Icons.arrow_back,
+          //     color: Colors.white,
+          //   ),
+          //   onPressed: () => Navigator.of(
+          //     context,
+          //     rootNavigator: true,
+          //   ).pop(
+          //     context,
+          //   ),
+          // ),
         ),
         body: Container(
           padding:
-          const EdgeInsets.only(left: 16, top: 25, right: 16, bottom: 12),
+              const EdgeInsets.only(left: 16, top: 25, right: 16, bottom: 12),
           // child: Align(
           //   alignment: Alignment.topCenter,
           child: Column(
@@ -68,8 +69,7 @@ class _viewPatientProfileState extends State<viewPatientProfile> {
                     shape: BoxShape.circle,
                     image: const DecorationImage(
                         fit: BoxFit.cover,
-                        image: NetworkImage(
-                            "https://www.kindpng.com/picc/m/451-4517876_default-profile-hd-png-download.png"))),
+                        image: AssetImage("assets/images/imgdefault.png"))),
               ),
 
               Text(
@@ -84,12 +84,19 @@ class _viewPatientProfileState extends State<viewPatientProfile> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  Text(patient.phno),
+                  Text(patient.age),
                   buildDivider(),
                   Text(patient.email),
                 ],
               ),
-
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(patient.phno),
+                  buildDivider(),
+                  Text(patient.gender),
+                ],
+              ),
               const SizedBox(
                 height: 100,
               ),
@@ -99,7 +106,10 @@ class _viewPatientProfileState extends State<viewPatientProfile> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => patient_history(patient: patient,)));
+                          builder: (context) => patient_history(
+                                patient: patient,
+                                doc: doc,
+                              )));
                 },
                 style: OutlinedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(horizontal: 50),
@@ -110,7 +120,7 @@ class _viewPatientProfileState extends State<viewPatientProfile> {
                   child: Text('Medical Folder',
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        // height: 2,
+                          // height: 2,
                           fontSize: 25,
                           letterSpacing: 1,
                           fontWeight: FontWeight.bold,

@@ -5,8 +5,8 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter/widgets.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 import 'package:flutter/src/widgets/framework.dart';
-//import 'package:ooadproject/doctor/patient%20list/patient_profile.dart';
-import '../main.dart';
+import 'package:ooadproject/doctor/patient%20list/patient_profile.dart';
+import 'package:ooadproject/welcome.dart';
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -41,16 +41,16 @@ class CalendarAppointment extends State<AppointmentWithoutWeekends> {
         title: const Text("Appointment Schedule"),
         // Theme.of(context).scaffoldBackgroundColor,
         elevation: 3,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back,
-              color: Color.fromARGB(255, 255, 255, 255)),
-          onPressed: () => Navigator.of(
-            context,
-            rootNavigator: true,
-          ).pop(
-            context,
-          ),
-        ),
+        // leading: IconButton(
+        //   icon: const Icon(Icons.arrow_back,
+        //       color: Color.fromARGB(255, 255, 255, 255)),
+        //   onPressed: () => Navigator.of(
+        //     context,
+        //     rootNavigator: true,
+        //   ).pop(
+        //     context,
+        //   ),
+        // ),
       ),
       body: SafeArea(
         child: SfCalendar(
@@ -128,7 +128,7 @@ class CalendarAppointment extends State<AppointmentWithoutWeekends> {
         CalendarDataSourceAction.reset, _dataSource.appointments!);
   }
 
-
+  
 
   void _getColorCollection() {
     _colorCollection.add(const Color(0xFF0F8644));

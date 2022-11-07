@@ -1,22 +1,18 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import '../main.dart';
-import 'edit_profile_doc.dart';
-// import 'package:ooadproject/patient/book%20appointment/book_appointment.dart';
+import 'package:ooadproject/doctor/edit_doc_dash.dart';
+import 'package:ooadproject/welcome.dart';
 
-// import 'package:ooadproject/doctor/medical%20folder/patient_history.dart';
-
-// ignore: camel_case_types
-class viewDocProfile extends StatefulWidget {
-  viewDocProfile({super.key, required this.doc});
-Doctor doc;
+class viewDocProf extends StatefulWidget {
+  viewDocProf({super.key, required this.doc});
+  Doctor doc;
   @override
-  State<viewDocProfile> createState() => _viewDocProfileState();
+  State<viewDocProf> createState() => _viewDocProfState();
 }
 
 // ignore: camel_case_types
-class _viewDocProfileState extends State<viewDocProfile> {
+class _viewDocProfState extends State<viewDocProf> {
   @override
   Widget build(BuildContext context) {
     CollectionReference users = FirebaseFirestore.instance.collection('Doctor');
@@ -32,18 +28,6 @@ class _viewDocProfileState extends State<viewDocProfile> {
           title: const Text("Profile"),
           // Theme.of(context).scaffoldBackgroundColor,
           elevation: 3,
-          leading: IconButton(
-            icon: const Icon(
-              Icons.arrow_back,
-              color: Colors.white,
-            ),
-            onPressed: () => Navigator.of(
-              context,
-              rootNavigator: true,
-            ).pop(
-              context,
-            ),
-          ),
         ),
         body: Container(
             padding:
@@ -75,7 +59,9 @@ class _viewDocProfileState extends State<viewDocProfile> {
                         shape: BoxShape.circle,
                         image: const DecorationImage(
                             fit: BoxFit.cover,
-                            image: AssetImage('assets/images/imgdefault.png',))),
+                            image: AssetImage(
+                              'assets/images/imgdefault.png',
+                            ))),
                   ),
                   const SizedBox(
                     height: 15,
@@ -135,11 +121,12 @@ class _viewDocProfileState extends State<viewDocProfile> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => edit_profile_doc(doc: doc)));
+                              builder: (context) =>
+                                  edit_doc_dash(doc: doc)));
                     },
                     style: OutlinedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(horizontal: 50),
-                      backgroundColor: Color.fromARGB(77, 94, 98, 99),
+                      backgroundColor: Colors.green,
                     ),
                     child: const Padding(
                       padding: EdgeInsets.all(15),
@@ -184,14 +171,25 @@ class _viewDocProfileState extends State<viewDocProfile> {
                           Padding(
                               padding: const EdgeInsets.only(right: 100.0),
                               child: Text(
-                                data['Educational Details'],
+                                data['Educational Details']
+                                    .toString()
+                                    .substring(0, 5),
                                 textAlign: TextAlign.start,
                                 style: TextStyle(
                                     height: 2,
                                     color: Colors.grey[800],
-                                    // fontWeight: FontWeight.bold,
                                     fontSize: 15),
                               )),
+                          Text(
+                            data['Educational Details']
+                                .toString()
+                                .substring(6, ),
+                            textAlign: TextAlign.start,
+                            style: TextStyle(
+                                height: 2,
+                                color: Colors.grey[800],
+                                fontSize: 15),
+                          ),
                         ],
                       );
                     }
