@@ -8,6 +8,7 @@ import 'package:ooadproject/patient/book%20appointment/search_dr_tab.dart';
 import 'package:ooadproject/patient/my_appointments.dart';
 import 'package:ooadproject/welcome.dart';
 
+import '../Login-page.dart';
 import 'Pat_prof.dart';
 
 class HomeScreen_patient extends StatefulWidget {
@@ -44,7 +45,14 @@ class _HomeScreen_patientState extends State<HomeScreen_patient> {
               child: IconButton(
                   icon: Icon(power_settings_new),
                   hoverColor: Colors.red,
-                  onPressed: () => Navigator.of(context).pop()),
+                  onPressed: (){
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              MyApp1(
+                                doc: doc, patient: patient,)),);
+                  }),
             ),
           ),
           SafeArea(
@@ -210,12 +218,16 @@ class _HomeScreen_patientState extends State<HomeScreen_patient> {
                             borderRadius: BorderRadius.circular(8)),
                         elevation: 4,
                         child: InkWell(
-                            onTap: () => Navigator.push(
+                            onTap: () {
+                              Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) => viewPatProf(
-                                          doc: doc, patient: patient)),
-                                ),
+                                          patient: patient,
+                                          doc: doc))).then((value) {
+                                setState(() {});
+                              });
+                            },
                             child: Padding(
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 4),

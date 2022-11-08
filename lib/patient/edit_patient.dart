@@ -233,7 +233,7 @@ class _EditProfilePage_patState extends State<EditProfilePage_pat> {
                     style: ElevatedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(horizontal: 40),
                       foregroundColor: Colors.white,
-                      backgroundColor: Colors.blue, // foreground
+                      backgroundColor: Colors.green, // foreground
                       shape: const RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(
                           Radius.circular(20),

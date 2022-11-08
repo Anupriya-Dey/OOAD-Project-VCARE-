@@ -31,7 +31,9 @@ class MyApp1 extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       routes: <String, WidgetBuilder>{
         '/signup': (BuildContext context) =>
-            new SignupPage(doc: doc, patient: patient)
+           SignupPage(doc: doc, patient: patient),
+        '/login' : (BuildContext context) =>
+            SignupPage(doc: doc, patient: patient),
       },
     );
   }
@@ -63,8 +65,8 @@ class _MyHomePageState extends State<MyHomePage> {
         Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) => EditProfilePage_doc(doc: doc)),
-        );
+              builder: (context) => EditProfilePage_doc(doc: doc,patient: patient),
+        ));
       } else {
         Navigator.push(
           context,
@@ -79,14 +81,16 @@ class _MyHomePageState extends State<MyHomePage> {
       if (qr == "Doctor" || qr == "doctor") {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => HomeScreen_doc(doc: doc)),
+          MaterialPageRoute(builder: (context) => HomeScreen_doc(doc: doc, patient: patient)),
         );
       } else {
-        Navigator.push(
+        Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(
               builder: (context) =>
-                  HomeScreen_patient(doc: doc, patient: patient)),
+                  HomeScreen_patient(doc: doc, patient: patient)),(r){
+            return false;
+        }
         );
       }
     }
@@ -234,6 +238,33 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                     ),
                   ),
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                   SizedBox(
                     height: 15,
                   ),
