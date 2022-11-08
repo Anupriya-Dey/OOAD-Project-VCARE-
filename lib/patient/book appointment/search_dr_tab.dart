@@ -50,7 +50,7 @@ class _search_docState extends State<search_doc> {
         fontFamily: 'AbrilFatface Regular', fontSize: 20, color: Colors.black);
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.blue,
+          backgroundColor: Colors.green,
           title: const Text("Book Appointment"),
           // Theme.of(context).scaffoldBackgroundColor,
           elevation: 3,

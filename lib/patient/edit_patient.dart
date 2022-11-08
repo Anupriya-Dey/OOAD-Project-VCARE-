@@ -47,7 +47,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
     Patient patient = widget.patient;
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.blue,
+        backgroundColor: Colors.green,
         title: const Text("My Profile"),
         // Theme.of(context).scaffoldBackgroundColor,
         elevation: 3,
@@ -111,7 +111,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                               width: 4,
                               color: Theme.of(context).scaffoldBackgroundColor,
                             ),
-                            color: Colors.blue,
+                            color: Colors.green,
                           ),
                           child: const Icon(
                             Icons.edit,
@@ -247,7 +247,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     style: ElevatedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(horizontal: 40),
                       foregroundColor: Colors.white,
-                      backgroundColor: Colors.blue, // foreground
+                      backgroundColor: Colors.green, // foreground
                       shape: const RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(
                           Radius.circular(20),

@@ -23,7 +23,7 @@ class MyApp1 extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.green,
       ),
       home: MyHomePage(title: 'Flutter Demo Home Page',doc: doc,patient: patient),
       debugShowCheckedModeBanner: false,
@@ -220,7 +220,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       style: ElevatedButton.styleFrom(
                         padding: const EdgeInsets.symmetric(horizontal: 40),
                         foregroundColor: Colors.white,
-                        backgroundColor: Colors.blue, // foreground
+                        backgroundColor: Colors.green, // foreground
                         shape: const RoundedRectangleBorder(
                           borderRadius: BorderRadius.all(
                             Radius.circular(20),
@@ -241,7 +241,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         },
                         child: Text('Register',
                             style: TextStyle(
-                                color: Colors.blueGrey,
+                                color: Colors.green,
                                 fontFamily: 'Montserrat',
                                 fontWeight: FontWeight.bold,
                                 decoration: TextDecoration.underline)),

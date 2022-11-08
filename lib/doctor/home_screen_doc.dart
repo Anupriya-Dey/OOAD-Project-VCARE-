@@ -30,7 +30,7 @@ class _HomeScreen_docState extends State<HomeScreen_doc> {
     return Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
-          backgroundColor: Colors.blue,
+          backgroundColor: Colors.green,
           title: const Text("VCARE : Doctor Portal"),
           elevation: 3,
         ),

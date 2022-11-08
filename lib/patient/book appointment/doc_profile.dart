@@ -25,7 +25,7 @@ class _viewDocProfileState extends State<viewDocProfile> {
         );
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.blue,
+          backgroundColor: Colors.green,
           title: const Text("Profile"),
           // Theme.of(context).scaffoldBackgroundColor,
           elevation: 3,

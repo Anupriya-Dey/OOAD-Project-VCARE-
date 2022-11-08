@@ -136,7 +136,7 @@ class WelcomeState extends State<Welcome> {
         fontFamily: 'AbrilFatface Regular', fontSize: 20, color: Colors.black);
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.blue,
+          backgroundColor: Colors.green,
           title: const Text("Sign in"),
           // Theme.of(context).scaffoldBackgroundColor,
           elevation: 3,
@@ -174,10 +174,10 @@ class WelcomeState extends State<Welcome> {
                   },
                   style: OutlinedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(horizontal: 50),
-                      backgroundColor: Color.fromARGB(77, 156, 227, 247),
+                      backgroundColor: Colors.green,
                       minimumSize: Size(500, 50),
                       side: const BorderSide(
-                          color: Color.fromARGB(84, 33, 149, 243), width: 1)),
+                          color: Colors.green, width: 1)),
                   child: const Padding(
                     padding: EdgeInsets.all(15),
                     child: Text('Welcome!!',

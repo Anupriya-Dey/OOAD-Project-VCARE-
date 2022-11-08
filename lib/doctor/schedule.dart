@@ -37,7 +37,7 @@ class CalendarAppointment extends State<AppointmentWithoutWeekends> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.blue,
+        backgroundColor: Colors.green,
         title: const Text("Appointment Schedule"),
         // Theme.of(context).scaffoldBackgroundColor,
         elevation: 3,

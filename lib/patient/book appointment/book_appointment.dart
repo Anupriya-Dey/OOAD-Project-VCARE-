@@ -3,7 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:ooadproject/patient/home_screen_patient.dart';
 import 'package:ooadproject/welcome.dart';
 
-const Color darkBlue = Color.fromARGB(255, 18, 32, 47);
+const Color darkgreen = Color.fromARGB(255, 18, 32, 47);
 
 class FlutterDatePickerExample extends StatelessWidget {
   FlutterDatePickerExample(

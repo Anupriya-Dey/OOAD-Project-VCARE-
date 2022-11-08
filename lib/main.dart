@@ -4,16 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:ooadproject/welcome.dart';
 
 import 'firebase_options.dart';
-// import 'package:ooadproject/doctor/schedule.dart';
-
-
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.android,
   );
-  // const db = firebase.firestore();
   runApp(MyApp());
 }
 

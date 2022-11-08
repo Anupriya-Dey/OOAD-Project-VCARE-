@@ -5,8 +5,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'Login-page.dart';
 import 'welcome.dart';
-//import 'Doctor-pages/edit_profile_doc.dart';
-
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
 
@@ -161,7 +159,7 @@ class _SignupPageState extends State<SignupPage> {
                   style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(horizontal: 40),
                     foregroundColor: Colors.white,
-                    backgroundColor: Colors.blue, // foreground
+                    backgroundColor: Colors.green, // foreground
                     shape: const RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(
                         Radius.circular(20),
@@ -182,7 +180,7 @@ class _SignupPageState extends State<SignupPage> {
                     },
                     child: Text('Go Back',
                         style: TextStyle(
-                            color: Colors.blueGrey,
+                            color: Colors.green,
                             fontFamily: 'Montserrat',
                             fontWeight: FontWeight.bold,
                             decoration: TextDecoration.underline)),
