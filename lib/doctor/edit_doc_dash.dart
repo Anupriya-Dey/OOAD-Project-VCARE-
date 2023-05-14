@@ -8,22 +8,7 @@ import '../doctor/home_screen_doc.dart';
 
 import '../welcome.dart';
 
-
 // ignore: camel_case_types
-class edit_doc_dash extends StatelessWidget {
-  edit_doc_dash({super.key, required this.doc});
-  Doctor doc;
-  // const SettingsUI({Key key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: "Setting UI",
-      home: EditProfilePage(doc: doc),
-    );
-  }
-}
 
 class EditProfilePage extends StatefulWidget {
   EditProfilePage({super.key, required this.doc});
@@ -50,13 +35,13 @@ class _EditProfilePageState extends State<EditProfilePage> {
   //       .catchError((error) => print("Failed to add user: $error"));
   // }
 
-
-  String sp = "", nm = "", em = "",educ="";
+  String sp = "", nm = "", em = "", educ = "";
   double ct = 0;
   @override
   Widget build(BuildContext context) {
     Doctor doc = widget.doc;
     return Scaffold(
+      backgroundColor: Color.fromARGB(255, 216, 240, 209),
       appBar: AppBar(
         backgroundColor: Colors.green,
         title: const Text("My Profile"),
@@ -108,7 +93,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
                           shape: BoxShape.circle,
                           image: const DecorationImage(
                               fit: BoxFit.fill,
-                              image: AssetImage('assets/images/imgdefault.png'))),
+                              image:
+                                  AssetImage('assets/images/imgdefault.png'))),
                     ),
                     Positioned(
                         bottom: 0,
@@ -122,7 +108,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                               width: 4,
                               color: Theme.of(context).scaffoldBackgroundColor,
                             ),
-                            color: Colors.green,
+                            color: Colors.blue,
                           ),
                           child: const Icon(
                             Icons.edit,
@@ -192,6 +178,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
               Padding(
                 padding: const EdgeInsets.only(bottom: 35.0),
                 child: TextField(
+                  keyboardType: TextInputType.multiline,
+                  maxLines: null,
                   onChanged: (value) {
                     educ = value;
                   },
@@ -216,13 +204,10 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 children: [
                   ElevatedButton(
                     onPressed: () async {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => HomeScreen_doc(doc: doc)),
-                      );
+                      Navigator.pop(context);
                     },
                     style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.green,
                         padding: const EdgeInsets.symmetric(horizontal: 30),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20))),
@@ -231,26 +216,22 @@ class _EditProfilePageState extends State<EditProfilePage> {
                             fontSize: 14,
                             letterSpacing: 2.2,
                             //  fontWeight: FontWeight.bold,
-                            color: Colors.black)),
+                            color: Colors.white)),
                   ),
                   ElevatedButton(
                     onPressed: () async {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => HomeScreen_doc(doc: doc,)),
-                      );
+                      Navigator.pop(context);
                       //addUser();
                       // Call the user's CollectionReference to add a new user
                       return await users
                           .doc(FirebaseAuth.instance.currentUser?.uid)
                           .update({
-                        "Name": nm,
-                        "Specialisation": sp,
-                        "contact no": ct,
-                        "Address": em,
-                        "Educational Details": educ,
-                      })
+                            "Name": nm,
+                            "Specialisation": sp,
+                            "contact no": ct,
+                            "Address": em,
+                            "Educational Details": educ,
+                          })
                           .then((value) => print("Profile updated"))
                           .catchError(
                               (error) => print("Failed to update: $error"));

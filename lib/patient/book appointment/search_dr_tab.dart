@@ -18,22 +18,22 @@ class search_doc extends StatefulWidget {
 // ignore: camel_case_types
 class _search_docState extends State<search_doc> {
   List<Doctor> searchTerms = [
-    Doctor.constructor2(
-        "Dr Shalini veda", "9987654789", "psychiatrist", "sveda@gmail.com",Text("MBBS,\nAIIMS Rishikesh")),
-    Doctor.constructor2(
-        "Dr Vedik gosh", "2345622", "General practitioner", "vghosh2gmail.com",Text("MBBS,\nAIIMS Rishikesh")),
-    Doctor.constructor2(
-        "Dr Amedi shah", "98765434567", "Orthopedics", "ashah@gmail.com",Text("MBBS,\nAIIMS Rishikesh")),
-    Doctor.constructor2(
-        "Dr Noor Ahmed", "98765434567", "Neurologist", "sahmed@gmail.com",Text("MBBS,\nAIIMS Rishikesh")),
-    Doctor.constructor2(
-        "Dr Rahul Dariya", "8765433456", "Dermatologist", "rdariya@gmail.com",Text("MBBS,\nAIIMS Rishikesh")),
-    Doctor.constructor2(
-        "Dr Meghna Raj", "987445676", "Oncologist", "mraj@gmail.com",Text("MBBS,\nAIIMS Rishikesh")),
+    Doctor.constructor2("Dr Shalini veda", "9987654789", "psychiatrist",
+        "sveda@gmail.com", Text("MBBS,\nAIIMS Rishikesh")),
+    Doctor.constructor2("Dr Vedik gosh", "2345622", "General practitioner",
+        "vghosh2gmail.com", Text("MBBS,\nAIIMS Rishikesh")),
+    Doctor.constructor2("Dr Amedi shah", "98765434567", "Orthopedics",
+        "ashah@gmail.com", Text("MBBS,\nAIIMS Rishikesh")),
+    Doctor.constructor2("Dr Noor Ahmed", "98765434567", "Neurologist",
+        "sahmed@gmail.com", Text("MBBS,\nAIIMS Rishikesh")),
+    Doctor.constructor2("Dr Rahul Dariya", "8765433456", "Dermatologist",
+        "rdariya@gmail.com", Text("MBBS,\nAIIMS Rishikesh")),
+    Doctor.constructor2("Dr Meghna Raj", "987445676", "Oncologist",
+        "mraj@gmail.com", Text("MBBS,\nAIIMS Rishikesh")),
     Doctor.constructor2("Dr Paresh Kumar", "98765434567", "General Pracitioner",
-        "pkumar@gmail.com",Text("MBBS,\nAIIMS Rishikesh")),
-    Doctor.constructor2(
-        "Dr Jeet Singh", "87654567887", "Nephrologist", "jsingh@gmail.com",Text("MBBS,\nAIIMS Rishikesh")),
+        "pkumar@gmail.com", Text("MBBS,\nAIIMS Rishikesh")),
+    Doctor.constructor2("Dr Jeet Singh", "87654567887", "Nephrologist",
+        "jsingh@gmail.com", Text("MBBS,\nAIIMS Rishikesh")),
   ];
   void initState() {
     // TODO: implement initState
@@ -49,18 +49,19 @@ class _search_docState extends State<search_doc> {
     var cardTextStyle = const TextStyle(
         fontFamily: 'AbrilFatface Regular', fontSize: 20, color: Colors.black);
     return Scaffold(
+        backgroundColor: Color.fromARGB(255, 216, 240, 209),
         appBar: AppBar(
           backgroundColor: Colors.green,
           title: const Text("Book Appointment"),
           // Theme.of(context).scaffoldBackgroundColor,
           elevation: 3,
-        //   leading: IconButton(
-        //     icon: const Icon(
-        //       Icons.arrow_back,
-        //       color: Colors.white,
-        //     ),
-        //     onPressed: () => Navigator.of(context).pop(),
-        //   ),
+          //   leading: IconButton(
+          //     icon: const Icon(
+          //       Icons.arrow_back,
+          //       color: Colors.white,
+          //     ),
+          //     onPressed: () => Navigator.of(context).pop(),
+          //   ),
         ),
         body: Stack(children: <Widget>[
           SafeArea(
@@ -90,7 +91,7 @@ class _search_docState extends State<search_doc> {
                   },
                   style: OutlinedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(horizontal: 50),
-                      backgroundColor: Color.fromARGB(77, 156, 227, 247),
+                      backgroundColor: Color.fromARGB(253, 96, 199, 77),
                       minimumSize: Size(500, 50),
                       side: const BorderSide(
                           color: Color.fromARGB(84, 33, 149, 243), width: 1)),
@@ -102,8 +103,8 @@ class _search_docState extends State<search_doc> {
                             // height: 2,
                             fontSize: 20,
                             letterSpacing: 1,
-                            fontWeight: FontWeight.bold,
-                            color: Color.fromARGB(255, 12, 12, 12))),
+                            // fontWeight: FontWeight.bold,
+                            color: Colors.white)),
                   ),
                 ),
                 const SizedBox(
@@ -122,7 +123,7 @@ class _search_docState extends State<search_doc> {
                   },
                   style: OutlinedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(horizontal: 50),
-                      backgroundColor: Color.fromARGB(77, 156, 227, 247),
+                      backgroundColor: Color.fromARGB(253, 96, 199, 77),
                       minimumSize: Size(500, 50),
                       side: const BorderSide(
                           color: Color.fromARGB(84, 33, 149, 243), width: 1)),
@@ -135,7 +136,7 @@ class _search_docState extends State<search_doc> {
                             fontSize: 20,
                             letterSpacing: 1,
                             fontWeight: FontWeight.bold,
-                            color: Color.fromARGB(255, 12, 12, 12))),
+                            color: Colors.white)),
                   ),
                 ),
               ],

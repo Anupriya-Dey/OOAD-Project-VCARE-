@@ -22,6 +22,8 @@ class _viewPatientProfileState extends State<viewPatientProfile> {
           child: VerticalDivider(),
         );
     return Scaffold(
+        backgroundColor: Color.fromARGB(255, 216, 240, 209),
+        resizeToAvoidBottomInset: false,
         appBar: AppBar(
           backgroundColor: Colors.green,
           title: const Text("Profile"),
@@ -40,7 +42,8 @@ class _viewPatientProfileState extends State<viewPatientProfile> {
           //   ),
           // ),
         ),
-        body: Container(
+        body: SingleChildScrollView(
+            child: Container(
           padding:
               const EdgeInsets.only(left: 16, top: 25, right: 16, bottom: 12),
           // child: Align(
@@ -56,45 +59,70 @@ class _viewPatientProfileState extends State<viewPatientProfile> {
                 width: 130,
                 height: 130,
                 decoration: BoxDecoration(
-                    border: Border.all(
-                        width: 1,
-                        color: Theme.of(context).scaffoldBackgroundColor),
-                    boxShadow: [
-                      BoxShadow(
-                          spreadRadius: 2,
-                          // blurRadius: ,
-                          color: Colors.black.withOpacity(0.1),
-                          offset: const Offset(0, 10))
-                    ],
-                    shape: BoxShape.circle,
-                    image: const DecorationImage(
-                        fit: BoxFit.cover,
-                        image: AssetImage("assets/images/imgdefault.png"))),
+                            color: Colors.white,
+                            border: Border.all(width: 1, color: Colors.black),
+                            // boxShadow: [
+                            //   BoxShadow(
+                            //       spreadRadius: 2,
+                            //       // blurRadius: ,
+                            //       color: Colors.black.withOpacity(0.1),
+                            //       offset: const Offset(0, 10))
+                            // ],
+                            shape: BoxShape.circle,
+                            image: const DecorationImage(
+                                fit: BoxFit.cover,
+                                image: AssetImage(
+                                  'assets/images/imgdefault.png',
+                                ))),
               ),
 
               Text(
                 patient.name,
                 style: TextStyle(
                     height: 2,
-                    color: Colors.grey[800],
+                    color: Colors.black,
                     fontWeight: FontWeight.bold,
                     fontSize: 30),
               ),
-
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text(patient.age),
-                  buildDivider(),
-                  Text(patient.email),
-                ],
+              const SizedBox(
+                height: 20,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  Text(patient.phno),
+                  Text(patient.phno,
+                      style: TextStyle(
+                        color: Colors.black,
+                      )),
                   buildDivider(),
-                  Text(patient.gender),
+                  Text(patient.email,
+                      style: TextStyle(
+                        color: Colors.black,
+                      )),
+                ],
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text("age: " + patient.age + " Yrs",
+                      style: TextStyle(
+                        color: Colors.black,
+                      )),
+                ],
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text("Gender: " + patient.gender,
+                      style: TextStyle(
+                        color: Colors.black,
+                      )),
                 ],
               ),
               const SizedBox(
@@ -129,6 +157,6 @@ class _viewPatientProfileState extends State<viewPatientProfile> {
               ),
             ],
           ),
-        ));
+        )));
   }
 }

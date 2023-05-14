@@ -11,10 +11,11 @@ import 'doctor/home_screen_doc.dart';
 import 'signup.dart';
 import 'package:intl/intl.dart';
 
-
 final FirebaseAuth _auth = FirebaseAuth.instance;
+
 class MyApp1 extends StatelessWidget {
-  MyApp1({Key? key, required this.patient, required this.doc}) : super(key: key);
+  MyApp1({Key? key, required this.patient, required this.doc})
+      : super(key: key);
   Doctor doc;
   Patient patient;
   // This widget is the root of your application.
@@ -25,17 +26,23 @@ class MyApp1 extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.green,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page',doc: doc,patient: patient),
+      home: MyHomePage(
+          title: 'Flutter Demo Home Page', doc: doc, patient: patient),
       debugShowCheckedModeBanner: false,
       routes: <String, WidgetBuilder>{
-        '/signup': (BuildContext context) => new SignupPage(doc: doc,patient: patient)
+        '/signup': (BuildContext context) =>
+           SignupPage(doc: doc, patient: patient),
+        '/login' : (BuildContext context) =>
+            SignupPage(doc: doc, patient: patient),
       },
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key? key, required this.title, required this.patient, required this.doc}) : super(key: key);
+  MyHomePage(
+      {Key? key, required this.title, required this.patient, required this.doc})
+      : super(key: key);
   Doctor doc;
   Patient patient;
   final String title;
@@ -57,13 +64,15 @@ class _MyHomePageState extends State<MyHomePage> {
       if (qr == "Doctor" || qr == "doctor") {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => edit_profile_doc(doc: doc)),
-        );
-      }
-      else {
+          MaterialPageRoute(
+              builder: (context) => EditProfilePage_doc(doc: doc,patient: patient),
+        ));
+      } else {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => edit_patient(doc: doc, patient: patient)),
+          MaterialPageRoute(
+              builder: (context) =>
+                  EditProfilePage_pat(doc: doc, patient: patient)),
         );
       }
     }
@@ -72,20 +81,23 @@ class _MyHomePageState extends State<MyHomePage> {
       if (qr == "Doctor" || qr == "doctor") {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => HomeScreen_doc(doc: doc)),
+          MaterialPageRoute(builder: (context) => HomeScreen_doc(doc: doc, patient: patient)),
         );
-      }
-      else {
-        Navigator.push(
+      } else {
+        Navigator.pushAndRemoveUntil(
           context,
-          MaterialPageRoute(builder: (context) => HomeScreen_patient(doc: doc, patient: patient)),
+          MaterialPageRoute(
+              builder: (context) =>
+                  HomeScreen_patient(doc: doc, patient: patient)),(r){
+            return false;
+        }
         );
       }
     }
 
     void _singIn(String u) async {
       final User? user = (await _auth.signInWithEmailAndPassword(
-          email: _emailController.text, password: _passwordController.text))
+              email: _emailController.text, password: _passwordController.text))
           .user;
 
       if (user != null) {
@@ -101,21 +113,17 @@ class _MyHomePageState extends State<MyHomePage> {
       if (_success == 2) {
         CollectionReference? users;
         if (u == "Doctor" || u == "doctor") {
-          users =
-              FirebaseFirestore.instance.collection('Doctor');
-        }
-        else if (u == "Patient" || u == "patient") {
-          users =
-              FirebaseFirestore.instance.collection('Patient');
-        }
-        else {
+          users = FirebaseFirestore.instance.collection('Doctor');
+        } else if (u == "Patient" || u == "patient") {
+          users = FirebaseFirestore.instance.collection('Patient');
+        } else {
           users = null;
         }
 
         if (users != null) {
           final docRef = users.doc(FirebaseAuth.instance.currentUser?.uid);
           docRef.get().then(
-                (DocumentSnapshot doc) {
+            (DocumentSnapshot doc) {
               final data = doc.data() as Map<String, dynamic>;
               if (data['Name'] == "")
                 goToProfile(u);
@@ -124,13 +132,14 @@ class _MyHomePageState extends State<MyHomePage> {
             },
             onError: (e) => print("Error getting document: $e"),
           );
-        }
-        else
+        } else
           print("Error");
       }
     }
+
     String po = "";
     return Scaffold(
+        backgroundColor: Color.fromARGB(255, 216, 240, 209),
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
@@ -140,8 +149,8 @@ class _MyHomePageState extends State<MyHomePage> {
                   Container(
                     padding: EdgeInsets.fromLTRB(15, 110, 0, 0),
                     child: Text("Welcome",
-                        style:
-                        TextStyle(fontSize: 40, fontWeight: FontWeight.bold)),
+                        style: TextStyle(
+                            fontSize: 40, fontWeight: FontWeight.bold)),
                   )
                 ],
               ),
@@ -229,6 +238,33 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                     ),
                   ),
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                   SizedBox(
                     height: 15,
                   ),
@@ -241,7 +277,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         },
                         child: Text('Register',
                             style: TextStyle(
-                                color: Colors.green,
+                                color: Colors.blueGrey,
                                 fontFamily: 'Montserrat',
                                 fontWeight: FontWeight.bold,
                                 decoration: TextDecoration.underline)),

@@ -27,4 +27,3 @@ Small problems could be solved in distance without standing in queues. Also peop
 
 ## CONTRIBUTORS
 Naqiyah Kagzi, Himani Panwar, Komal Gupta, Anupriya Dey, Sachin Jangid, Sutirtha Ghosh
-

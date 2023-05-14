@@ -24,6 +24,7 @@ class _prescriptionfuncState extends State<prescriptionfunc> {
   Widget build(BuildContext context) {
     Patient patient = widget.patient;
     return Scaffold(
+      backgroundColor:  Color.fromARGB(255, 216, 240, 209),
       body: ListView.builder(
         padding: const EdgeInsets.only(top: 10),
         itemCount: (patient.presriptions.length) * 2,

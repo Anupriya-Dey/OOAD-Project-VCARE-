@@ -19,7 +19,9 @@ class _already_bookedState extends State<already_booked> {
   Widget build(BuildContext context) {
     Patient patient = widget.patient;
     return Scaffold(
+      backgroundColor:  Color.fromARGB(255, 216, 240, 209),
         appBar: AppBar(
+          backgroundColor: Colors.green,
           title: const Text("My Appointments"),
           automaticallyImplyLeading: false,
           leading: IconButton(

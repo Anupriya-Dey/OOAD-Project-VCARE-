@@ -3,7 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:ooadproject/patient/home_screen_patient.dart';
 import 'package:ooadproject/welcome.dart';
 
-const Color darkgreen = Color.fromARGB(255, 18, 32, 47);
+const Color darkBlue = Color.fromARGB(255, 18, 32, 47);
 
 class FlutterDatePickerExample extends StatelessWidget {
   FlutterDatePickerExample(
@@ -19,7 +19,9 @@ class FlutterDatePickerExample extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color.fromARGB(255, 216, 240, 209),
       appBar: AppBar(
+        backgroundColor: Colors.green,
         title: const Text('Book Appointment'),
       ),
       body: Padding(
@@ -104,7 +106,7 @@ class FlutterDatePickerExample extends StatelessWidget {
         ),
       ),
       bottomNavigationBar: Material(
-        color: Color.fromARGB(255, 71, 113, 253),
+        color: Colors.green,
         child: InkWell(
           onTap: () {
             if (longDateSub.value != null) {
@@ -139,6 +141,7 @@ class FlutterDatePickerExample extends StatelessWidget {
               child: Text(
                 'Submit',
                 style: TextStyle(
+                  color: Colors.white,
                   fontWeight: FontWeight.bold,
                 ),
               ),

@@ -15,7 +15,9 @@ class search_spec extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color.fromARGB(255, 216, 240, 209),
       appBar: AppBar(
+        backgroundColor: Colors.green,
         title: const Text(
           "Search doctor by specialisation",
           // style: TextStyle(fontSize: 15),
@@ -116,6 +118,7 @@ class CustomSearchDelegate extends SearchDelegate {
       itemBuilder: (context, index) {
         var result = matchQuery[index];
         return ListTile(
+          tileColor: Color.fromARGB(255, 216, 240, 209),
           onTap: () {
             Navigator.push(
                 context,

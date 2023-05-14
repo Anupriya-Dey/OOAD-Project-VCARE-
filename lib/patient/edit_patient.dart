@@ -8,24 +8,9 @@ import 'home_screen_patient.dart';
 // import 'package:ooadproject/home_screen.dart';
 
 // ignore: camel_case_types
-class edit_patient extends StatelessWidget {
-  edit_patient({super.key, required this.doc, required this.patient});
-  Doctor doc;
-  Patient patient;
 
-  // const SettingsUI({Key key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: "Setting UI",
-      home: EditProfilePage(doc: doc,patient: patient),
-    );
-  }
-}
-class EditProfilePage extends StatefulWidget {
-  EditProfilePage({super.key, required this.doc, required this.patient});
+class EditProfilePage_pat extends StatefulWidget {
+  EditProfilePage_pat({super.key, required this.doc, required this.patient});
   Doctor doc;
   Patient patient;
 
@@ -33,10 +18,10 @@ class EditProfilePage extends StatefulWidget {
 
   @override
   // ignore: library_private_types_in_public_api
-  _EditProfilePageState createState() => _EditProfilePageState();
+  _EditProfilePage_patState createState() => _EditProfilePage_patState();
 }
 
-class _EditProfilePageState extends State<EditProfilePage> {
+class _EditProfilePage_patState extends State<EditProfilePage_pat> {
   bool showPassword = false;
   CollectionReference users = FirebaseFirestore.instance.collection('Patient');
   String sp = "", nm = "";
@@ -46,6 +31,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
     Doctor doc = widget.doc;
     Patient patient = widget.patient;
     return Scaffold(
+      backgroundColor:  Color.fromARGB(255, 216, 240, 209),
       appBar: AppBar(
         backgroundColor: Colors.green,
         title: const Text("My Profile"),
@@ -111,7 +97,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                               width: 4,
                               color: Theme.of(context).scaffoldBackgroundColor,
                             ),
-                            color: Colors.green,
+                            color: Colors.blue,
                           ),
                           child: const Icon(
                             Icons.edit,

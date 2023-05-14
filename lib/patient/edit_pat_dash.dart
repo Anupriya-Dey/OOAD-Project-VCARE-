@@ -5,22 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:ooadproject/welcome.dart';
 import 'home_screen_patient.dart';
 
-
-class edit_pat_dash extends StatelessWidget {
-  edit_pat_dash({super.key, required this.doc, required this.patient});
-  Doctor doc;
-  Patient patient;
-
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: "Editing Profile",
-      home: EditProfile(doc: doc,patient: patient),
-    );
-  }
-}
 class EditProfile extends StatefulWidget {
   EditProfile({super.key, required this.doc, required this.patient});
   Doctor doc;
@@ -37,12 +21,13 @@ class _EditProfileState extends State<EditProfile> {
   bool showPassword = false;
   CollectionReference users = FirebaseFirestore.instance.collection('Patient');
   String sp = "", nm = "";
-  double ct = 0,em=0;
+  double ct = 0, em = 0;
   @override
   Widget build(BuildContext context) {
     Doctor doc = widget.doc;
     Patient patient = widget.patient;
     return Scaffold(
+      backgroundColor: Color.fromARGB(255, 216, 240, 209),
       appBar: AppBar(
         backgroundColor: Colors.green,
         title: const Text("My Profile"),
@@ -84,7 +69,8 @@ class _EditProfileState extends State<EditProfile> {
                           shape: BoxShape.circle,
                           image: const DecorationImage(
                               fit: BoxFit.fill,
-                              image: AssetImage("assets/images/imgdefault.png"))),
+                              image:
+                                  AssetImage("assets/images/imgdefault.png"))),
                     ),
                     Positioned(
                         bottom: 0,
@@ -98,7 +84,7 @@ class _EditProfileState extends State<EditProfile> {
                               width: 4,
                               color: Theme.of(context).scaffoldBackgroundColor,
                             ),
-                            color: Colors.green,
+                            color: Colors.blue,
                           ),
                           child: const Icon(
                             Icons.edit,
@@ -192,13 +178,10 @@ class _EditProfileState extends State<EditProfile> {
                 children: [
                   ElevatedButton(
                     onPressed: () async {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => HomeScreen_patient(doc: doc, patient: patient)),
-                      );
+                      Navigator.of(context).pop();
                     },
                     style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.green,
                         padding: const EdgeInsets.symmetric(horizontal: 30),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20))),
@@ -207,25 +190,22 @@ class _EditProfileState extends State<EditProfile> {
                             fontSize: 14,
                             letterSpacing: 2.2,
                             //  fontWeight: FontWeight.bold,
-                            color: Colors.black)),
+                            color: Color.fromARGB(255, 255, 255, 255))),
                   ),
                   ElevatedButton(
                     onPressed: () async {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => HomeScreen_patient(doc: doc, patient: patient)),
-                      );
+                      Navigator.of(context).pop();
+
                       //addUser();
                       // Call the user's CollectionReference to add a new user
                       return await users
                           .doc(FirebaseAuth.instance.currentUser?.uid)
                           .update({
-                        "Name": nm,
-                        "Gender": sp,
-                        "contact no": ct,
-                        "Age": em,
-                      })
+                            "Name": nm,
+                            "Gender": sp,
+                            "contact no": ct,
+                            "Age": em,
+                          })
                           .then((value) => print("Profile updated"))
                           .catchError(
                               (error) => print("Failed to update: $error"));
